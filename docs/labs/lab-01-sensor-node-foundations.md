@@ -1,5 +1,5 @@
 ---
-title: Lab 1: Sensor Node Foundations
+title: "Lab 1: Sensor Node Foundations"
 parent: Labs
 nav_order: 1
 permalink: /labs/lab-01-sensor-node-foundations/
