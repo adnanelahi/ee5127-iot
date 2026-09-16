@@ -8,10 +8,9 @@ permalink: /labs/
 
 # Laboratories
 
-Each lab brings together the starting point, essential setup, investigation, expected observations and troubleshooting on one page.
+Each lab brings together the starting point, essential setup, practical investigation, expected observations and troubleshooting on one page.
 
-Read the equipment requirements before beginning. Introduce changes one at a time, inspect the resulting behaviour, and use the reflection questions to explain what you observe.
-
-| Tutorial | Focus |
+| Lab | Core engineering investigation |
 |:--|:--|
-| [Lab page example]({{ '/labs/example/' | relative_url }}) | Preview of the reusable tutorial layout |
+| [Lab 1 — Sensor foundations]({{ '/labs/lab-01-sensor-node-foundations/' | relative_url }}) | Sampling jitter, overrun policy and resource budgets |
+| Lab 2 onward | Added as each lab is migrated and verified |
