@@ -201,16 +201,14 @@ Expected output:
 
 This structure makes the sensor output easier to inspect and reuse:
 
--
-odeId` identifies which physical node produced the data.
+- `nodeId` identifies which physical node produced the data.
 - `counter` gives ordering between successive readings.
 - Field names include units where practical.
 - JSON is easier for another program to parse than free-form printed text.
 
 ### 7. Instrument the sampling time
 
-Verify that the telemetry program above produces
-odeId`, increasing `counter`, temperature, humidity and pressure. Add `start = time.monotonic()` before its loop, then add `sampleElapsedS = time.monotonic() - start` immediately before reading the sensors and include that value in the payload. This is boot-relative software timing, not UTC or an exact sensor-conversion timestamp. Save serial output for each run.
+Verify that the telemetry program above produces `nodeId`, an increasing `counter`, and temperature, humidity and pressure values. Add `start = time.monotonic()` before its loop. Then add `sampleElapsedS = time.monotonic() - start` immediately before reading the sensors, and include that value in the payload. This is boot-relative software timing, not UTC or an exact sensor-conversion timestamp. Save the serial output from each run.
 
 Use monotonic time for durations on one machine. Comparing timestamps from different devices requires synchronised clocks and an error bound.
 
