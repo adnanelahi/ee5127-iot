@@ -1,6 +1,6 @@
 # EE5127 GitHub Pages template
 
-Template for review in the private repository https://github.com/adnanelahi/ee5127-iot. GitHub Pages remains disabled.
+Template published from the public repository https://github.com/adnanelahi/ee5127-iot. GitHub Pages is configured to build from `main` and `/docs`.
 
 ## Theme and layout
 
@@ -45,7 +45,7 @@ bundle exec jekyll serve --source docs --destination "$env:TEMP/ee5127-pages-pre
 
 Open the localhost address printed by Jekyll. The first build needs network access to fetch the pinned remote theme. Keep dependency caches and generated output outside the working project.
 
-## GitHub Pages setup, when authorised
+## GitHub Pages setup
 
 1. Copy only this starter directory's contents into the root of the selected repository. Do not upload the module-design workspace.
 2. Set `url` to `https://USERNAME.github.io` and `baseurl` to `/REPOSITORY` in `docs/_config.yml`. For a `USERNAME.github.io` repository, use an empty `baseurl`.
@@ -53,6 +53,6 @@ Open the localhost address printed by Jekyll. The first build needs network acce
 4. In **Settings → Pages**, choose **Deploy from a branch**, then **main** and **/docs**, and save. GitHub builds the Jekyll source with the remote-theme plugin; no custom deployment workflow is required.
 5. Check the Pages build result and review the published site, including a direct lab URL and asset downloads.
 
-Enabling Pages publishes the material. This is a future handoff, not an instruction to resume the paused GitBook upload. Review existing lab release holds before including those labs.
+Enabling Pages publishes the material. The repository is public, so the published site and source are visible on the internet. This GitHub Pages deployment is separate from the paused GitBook upload. Review existing lab release holds before adding those labs.
 
 See [GitHub's Jekyll Pages instructions](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll).
