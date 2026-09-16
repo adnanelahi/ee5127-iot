@@ -1,5 +1,5 @@
 ---
-title: Lab 1: Sensor Node Foundations
+title: "Lab 1: Sensor Node Foundations"
 nav_order: 2
 permalink: /labs/lab-01-sensor-node-foundations/
 ---
