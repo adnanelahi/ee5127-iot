@@ -12,20 +12,22 @@ Theme documentation: [Just the Docs](https://just-the-docs.com/). Upstream theme
 
 - `docs/_config.yml`: module title, theme, search and callouts.
 - `docs/index.md`: course home.
-- `docs/labs/index.md`: short lab overview.
-- `docs/labs/example.md`: rendered layout example and reusable authoring skeleton.
+- `docs/labs/index.md`: lab overview and migration status.
+- `docs/labs/lab-01-sensor-node-foundations.md`: first migrated laboratory page.
+- `docs/support/`: support pages required by migrated laboratories.
+- `docs/assets/images/`: approved instructional images grouped by lab.
 - `docs/_sass/custom/custom.scss`: responsive images and print adjustments.
 - `templates/lab.md`: blank lab skeleton, outside the published source.
 
-Only `docs/` is intended as the future Pages source. Keep this README, templates, staff records and archives outside it. The existing module `content/` directory remains the authoritative source for actual lab material. This starter does not migrate or approve any existing lab for release.
+Only `docs/` is the Pages source. Keep this README, templates, staff records and archives outside it. During the migration, the module `content/` directory remains a temporary source for labs not yet transferred; remove it only after the final lab has been checked and copied.
 
 ## Add a lab
 
-1. Copy `templates/lab.md` to `docs/labs/lab-01.md` (choose the appropriate number).
+1. Copy `templates/lab.md` to `docs/labs/lab-N-short-name.md` (choose the next lab number).
 2. Set a unique title, numeric `nav_order` and permalink. Keep `parent: Labs` identical to the overview's title.
 3. Replace the prompts with reviewed content from the authoritative module source. Preserve the agreed self-contained, unassessed lab structure.
 4. Put approved images in `docs/assets/images/` and downloads in `docs/assets/downloads/`. Reference them with the examples in the skeleton; the `relative_url` filter supports repository subpaths.
-5. Add the page link to the overview. Remove `docs/labs/example.md` and its overview row before a student release.
+5. Add the page link to the overview and the homepage table of contents will update automatically.
 6. Check page contents, sidebar order, search, images, downloads, code, mobile layout and print output in a rendered preview.
 
 GitBook-specific hint, tab and embed syntax must be converted to Jekyll-compatible Markdown/HTML when actual pages are transferred. Rewrite `.md` links to the chosen page permalinks. Do not simply copy the entire content tree or workspace into the Pages source.
