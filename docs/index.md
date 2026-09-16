@@ -14,7 +14,6 @@ These laboratories are unassessed practical activities. Use the investigations t
 
 ## Table of contents
 
-- [Laboratories]({{ '/labs/' | relative_url }})
 {% assign lab_pages = site.pages | where_exp: "item", "item.path contains 'labs/'" | sort: "nav_order" %}
 {% for lab in lab_pages %}
 {% unless lab.name == "index.md" %}
@@ -22,4 +21,4 @@ These laboratories are unassessed practical activities. Use the investigations t
 {% endunless %}
 {% endfor %}
 
-[Browse the laboratories]({{ '/labs/' | relative_url }}){: .btn .btn-primary }
+- [Support]({{ '/support/' | relative_url }})

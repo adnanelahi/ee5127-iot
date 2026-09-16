@@ -12,7 +12,7 @@ Theme documentation: [Just the Docs](https://just-the-docs.com/). Upstream theme
 
 - `docs/_config.yml`: module title, theme, search and callouts.
 - `docs/index.md`: course home.
-- `docs/labs/index.md`: lab overview and migration status.
+- `docs/labs/`: individual lab pages, ordered after Home in the sidebar.
 - `docs/labs/lab-01-sensor-node-foundations.md`: first migrated laboratory page.
 - `docs/support/`: support pages required by migrated laboratories.
 - `docs/assets/images/`: approved instructional images grouped by lab.
@@ -24,10 +24,10 @@ Only `docs/` is the Pages source. Keep this README, templates, staff records and
 ## Add a lab
 
 1. Copy `templates/lab.md` to `docs/labs/lab-N-short-name.md` (choose the next lab number).
-2. Set a unique title, numeric `nav_order` and permalink. Keep `parent: Labs` identical to the overview's title.
+2. Set a descriptive title from the lab folder name, a numeric `nav_order` after Home, and a permalink. Do not add a `parent` unless the page belongs under Support.
 3. Replace the prompts with reviewed content from the authoritative module source. Preserve the agreed self-contained, unassessed lab structure.
 4. Put approved images in `docs/assets/images/` and downloads in `docs/assets/downloads/`. Reference them with the examples in the skeleton; the `relative_url` filter supports repository subpaths.
-5. Add the page link to the overview and the homepage table of contents will update automatically.
+5. The homepage table of contents will update automatically from the lab pages.
 6. Check page contents, sidebar order, search, images, downloads, code, mobile layout and print output in a rendered preview.
 
 GitBook-specific hint, tab and embed syntax must be converted to Jekyll-compatible Markdown/HTML when actual pages are transferred. Rewrite `.md` links to the chosen page permalinks. Do not simply copy the entire content tree or workspace into the Pages source.

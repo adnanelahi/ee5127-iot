@@ -1,7 +1,6 @@
 ---
 title: "Lab N: Title"
-parent: Labs
-nav_order: 1
+nav_order: 2
 permalink: /labs/lab-N/
 ---
 
@@ -16,7 +15,7 @@ permalink: /labs/lab-N/
 
 ---
 
-## Aim
+## Engineering question
 
 Explain the system role and the engineering question.
 

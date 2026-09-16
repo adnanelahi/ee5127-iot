@@ -1,10 +1,9 @@
 ---
 title: Lab 1: Sensor Node Foundations
-parent: Labs
-nav_order: 1
+nav_order: 2
 permalink: /labs/lab-01-sensor-node-foundations/
 ---
-## Aim
+## Engineering question
 
 What sampling policy produces useful environmental telemetry within a constrained node's timing and payload budget? Configure the Feather baseline, then compare two sampling intervals using measured timing and sensor variability.
 
