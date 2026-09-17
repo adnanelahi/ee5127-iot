@@ -13,7 +13,7 @@ Theme documentation: [Just the Docs](https://just-the-docs.com/). Upstream theme
 - `docs/_config.yml`: module title, theme, search and callouts.
 - `docs/index.md`: course home.
 - `docs/labs/`: individual lab pages, ordered after Home in the sidebar.
-- `docs/labs/lab-01-sensor-node-foundations.md`: first migrated laboratory page.
+- `docs/labs/sensor-node-foundations.md`: first migrated laboratory page.
 - `docs/support/`: support pages required by migrated laboratories.
 - `docs/assets/images/`: approved instructional images grouped by lab.
 - `docs/_sass/custom/custom.scss`: responsive images and print adjustments.
@@ -23,7 +23,7 @@ Only `docs/` is the Pages source. Keep this README, templates, staff records and
 
 ## Add a lab
 
-1. Copy `templates/lab.md` to `docs/labs/lab-N-short-name.md` (choose the next lab number).
+1. Copy `templates/lab.md` to `docs/labs/descriptive-slug.md` and choose the next number in the contents/navigation.
 2. Set a descriptive title from the lab folder name, a numeric `nav_order` after Home, and a permalink. Do not add a `parent` unless the page belongs under Support.
 3. Replace the prompts with reviewed content from the authoritative module source. Preserve the agreed self-contained, unassessed lab structure.
 4. Put approved images in `docs/assets/images/` and downloads in `docs/assets/downloads/`. Reference them with the examples in the skeleton; the `relative_url` filter supports repository subpaths.

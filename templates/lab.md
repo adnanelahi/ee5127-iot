@@ -1,7 +1,7 @@
 ---
 title: "Lab N: Title"
 nav_order: 2
-permalink: /labs/lab-N/
+permalink: /labs/descriptive-slug/
 ---
 
 # Lab N: Title
