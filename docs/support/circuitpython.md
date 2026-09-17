@@ -4,7 +4,7 @@ parent: Support
 nav_order: 1
 permalink: /support/circuitpython/
 ---
-Essential board setup is in [Lab 1]({{ '/labs/sensor-node-foundations/' | relative_url }}), and sensor telemetry is developed in [Lab 2]({{ '/labs/sensor-telemetry/' | relative_url }}). Use this supplementary reference for additional pin details or interactive debugging.
+Essential board setup is in [Lab 1]({{ '/labs/sensor-node-foundations/' | relative_url }}). Use this supplementary reference for additional pin details or interactive debugging.
 
 ## Power and I/O
 
