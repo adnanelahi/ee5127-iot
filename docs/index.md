@@ -14,11 +14,6 @@ These laboratories are unassessed practical activities. Use the investigations t
 
 ## Table of contents
 
-{% assign lab_pages = site.pages | where_exp: "item", "item.path contains 'labs/'" | sort: "nav_order" %}
-{% for lab in lab_pages %}
-{% unless lab.name == "index.md" %}
-  - [{{ lab.title }}]({{ lab.url | relative_url }})
-{% endunless %}
-{% endfor %}
+- [Lab 1: Sensor Node Foundations]({{ '/labs/sensor-node-foundations/' | relative_url }})
 
 - [Support]({{ '/support/' | relative_url }})
