@@ -402,10 +402,6 @@ Find `board`, `digitalio` and `time` in the output. The result can include modul
 
 The [CircuitPython Board Reference and REPL]({{ '/support/circuitpython/' | relative_url }}) provides a short reminder for later labs.
 
-## Handoff to the next lab
-
-Restore the working blink program, retain a backup on your computer and keep the tested board installation ready. In [Lab 2: Sensor Telemetry and Sampling]({{ '/labs/sensor-telemetry/' | relative_url }}), you will inspect the onboard sensors, install their libraries and turn readings into measured telemetry.
-
 ## References and acknowledgements
 
 Board descriptions and pinout material draw on the [Adafruit Feather nRF52840 Sense guide](https://learn.adafruit.com/adafruit-feather-sense), including its [pinouts](https://learn.adafruit.com/adafruit-feather-sense/pinouts) and [nRF52 ADC](https://learn.adafruit.com/adafruit-feather-sense/nrf52-adc) pages.
