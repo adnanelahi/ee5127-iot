@@ -17,6 +17,7 @@ By the end you can:
 - Edit and run a blink program, explain its imports, pin configuration and loop, and predict the effect of changing it.
 - Use the serial console and REPL to inspect output, interrupt a program and explore the board.
 - Discover board-specific pin names and available modules, and explain how default I2C, SPI and UART bus objects are used.
+- Scan the default I2C bus, compare detected addresses with the expected onboard devices, and explain the limits of address-based diagnostics.
 
 ## Equipment and starting point
 
@@ -376,6 +377,85 @@ help("modules")
 
 Find `board`, `digitalio` and `time` in the output. The result can include modules available from the filesystem as well as firmware modules, so it is an inventory of available imports rather than proof that every listed module is built in. Compare the list with the documentation for your installed version; do not expect an exact match to a screenshot from another installation.
 
+### 8. Investigate the I²C bus
+
+The Feather Sense connects most of its onboard sensors to a shared I²C bus. Each device responds to an address, allowing the microcontroller to communicate with several devices using the same clock and data connections.
+
+**Engineering question:** What does detecting an I²C address establish about a sensor, and what remains untested?
+
+#### Predict the connected devices
+
+Before running the scan, use the table below to predict the addresses you expect to find.
+
+| Device | Expected I²C address |
+|---|---|
+| LIS3MDL magnetometer | `0x1c` |
+| APDS9960 light, proximity and gesture sensor | `0x39` |
+| SHT30 temperature and humidity sensor | `0x44` |
+| LSM6DS33 or LSM6DS3TR-C accelerometer and gyroscope | `0x6a` |
+| BMP280 pressure and temperature sensor | `0x77` |
+
+The microphone uses a PDM interface rather than I²C, so it should not appear in the scan.
+
+#### Scan the bus
+
+Save a backup of your blink program on your computer. Replace `code.py` with the following program. It uses built-in modules and does not require sensor libraries.
+
+```python
+import board
+import time
+
+i2c = board.I2C()
+
+# Allow a bounded wait to acquire the bus lock.
+deadline = time.monotonic() + 2.0
+
+while not i2c.try_lock():
+    if time.monotonic() >= deadline:
+        raise RuntimeError("Could not acquire the I2C bus lock")
+    time.sleep(0.01)
+
+try:
+    addresses = i2c.scan()
+    print("Devices found:", len(addresses))
+    print("I2C addresses:", [hex(address) for address in addresses])
+finally:
+    i2c.unlock()
+```
+
+Open the serial console before saving the program. The scan runs once; use **Ctrl+D** from the REPL to run it again.
+
+The bus lock gives this code exclusive access while it scans. The `finally` block releases the lock even if the scan raises an error. The two-second limit bounds the wait for the lock; it does not set a timeout for the scan itself.
+
+#### Compare prediction and observation
+
+A typical result is:
+
+```text
+Devices found: 5
+I2C addresses: ['0x1c', '0x39', '0x44', '0x6a', '0x77']
+```
+
+Repeat the scan three times. Compare the returned address sets with your prediction; focus on which addresses appear rather than their display order.
+
+If an expected address is missing or an additional address appears:
+
+1. Confirm that the program uses `board.I2C()`, which selects the board’s default bus.
+2. Reload the program and repeat the scan. If the difference persists, discuss it with the demonstrator before concluding that a sensor is faulty.
+
+#### Interpret the result
+
+The scan shows which addresses respond on the I²C bus. It does not read sensor measurements or establish whether those measurements are correct.
+
+- A sensor can respond to the scan while producing incorrect or unusable readings.
+- An address alone does not identify the sensor model. Both supported motion-sensor models use `0x6a`, so the scan cannot tell you which driver to use.
+- If two devices share an address, the scan may show that address only once. It cannot establish whether communication with each device will work correctly.
+- A missing address tells you that an expected device did not respond. It does not explain whether the cause is power, a connection, the bus or the device itself.
+
+**Self-check:** Why is finding all five expected addresses a useful first check, and what further checks would you need before trusting the sensor measurements?
+
+Restore the blink program after the investigation. In Lab 2, you will use sensor drivers to read and interpret measurements.
+
 ## Observations and reflection
 
 - What does a visible **CIRCUITPY** drive establish, and what additional evidence does the blinking LED provide?
@@ -385,6 +465,7 @@ Find `board`, `digitalio` and `time` in the output. The result can include modul
 - Why was the serial console quiet during the original blink program, and what made the greeting visible?
 - What do `dir(board)` and `help("modules")` tell you when adapting code written for another board?
 - Why should two drivers sharing the default I2C bus use one bus object?
+- Your scan finds all five expected addresses. What further checks are needed before you trust the sensors’ measurements?
 
 ## Troubleshooting
 
