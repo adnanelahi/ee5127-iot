@@ -133,6 +133,10 @@ Copying a Python file to the bootloader drive does not make it available to Circ
 
 Use the supplied editor environment, or install [Visual Studio Code](https://code.visualstudio.com/) and the module's tested Python and [CircuitPython V2](https://marketplace.visualstudio.com/items?itemName=wmerkens.vscode-circuitpython-v2) extensions. Python editing support and completion tools such as IntelliCode assist editing; the board's CircuitPython firmware executes the program. Reload VS Code when prompted after installing extensions.
 
+> **Required VS Code extension version**
+>
+> Install **CircuitPython V2 extension version 0.3.3**, even if VS Code offers a newer version. The laboratory instructions and serial-console workflow have been tested with version 0.3.3. In the Extensions view, open the CircuitPython V2 extension's settings menu, select **Install Another Version...**, and choose **0.3.3**. Disable automatic updates for this extension while completing the laboratories.
+
 ![Installing the CircuitPython extension in VS Code]({{ '/assets/images/sensor-node-foundations/vscode-install-circuitpython-extension.png' | relative_url }})
 
 Open **CIRCUITPY** as a folder in VS Code.
