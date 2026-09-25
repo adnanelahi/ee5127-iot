@@ -16,4 +16,6 @@ These laboratories are unassessed practical activities. Use the investigations t
 
 - [Lab 1: Sensor Node Foundations]({{ '/labs/sensor-node-foundations/' | relative_url }})
 
+- [Lab 2: Sensor Telemetry and Sampling]({{ '/labs/sensor-telemetry/' | relative_url }})
+
 - [Support]({{ '/support/' | relative_url }})
