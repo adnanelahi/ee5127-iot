@@ -1,5 +1,5 @@
 ---
-title: "Lab 2: Sensor Telemetry and Sampling"
+title: "Lab 2: Sensor Data Acquisition and Sampling"
 nav_order: 3
 permalink: /labs/sensor-telemetry/
 ---
