@@ -14,7 +14,9 @@ You can distinguish connectionless advertising from connected GATT services; ide
 
 ## Equipment and starting point
 
-Use the Feather prepared in Lab 2, a USB serial console and a BLE-capable phone. Copy `adafruit_ble`, `adafruit_ble_eddystone` and their matching dependencies from the CircuitPython library bundle into `CIRCUITPY/lib`. Keep the sensor libraries from Lab 2. The four programs below are also available as [Advertising code]({{ '/assets/downloads/ble-telemetry/ble-advertising.py' | relative_url }}), [Eddystone code]({{ '/assets/downloads/ble-telemetry/ble-eddystone.py' | relative_url }}), [Environmental Sensing code]({{ '/assets/downloads/ble-telemetry/ble-environmental-sensing.py' | relative_url }}) and [BLE UART code]({{ '/assets/downloads/ble-telemetry/ble-uart-telemetry.py' | relative_url }}).
+Use the Feather prepared in Lab 2, a USB serial console and a BLE-capable phone. From the CircuitPython library bundle used in Lab 2, copy the complete `adafruit_ble` and `adafruit_ble_eddystone` folders into `CIRCUITPY/lib`. Keep the sensor libraries already installed for Lab 2. Check that `CIRCUITPY/lib/adafruit_ble/` and `CIRCUITPY/lib/adafruit_ble_eddystone/` now appear alongside the sensor libraries.
+
+The four programs below are also available as [Advertising code]({{ '/assets/downloads/ble-telemetry/ble-advertising.py' | relative_url }}), [Eddystone code]({{ '/assets/downloads/ble-telemetry/ble-eddystone.py' | relative_url }}), [Environmental Sensing code]({{ '/assets/downloads/ble-telemetry/ble-environmental-sensing.py' | relative_url }}) and [BLE UART code]({{ '/assets/downloads/ble-telemetry/ble-uart-telemetry.py' | relative_url }}).
 
 Choose the four-character code assigned to your group, such as `G001`, and replace `G001` in each program. The advertised names will then include your group code. The Eddystone UID uses the same code in its namespace.
 
