@@ -7,8 +7,8 @@ permalink: /support/
 
 # Support Material
 
-Use these pages when a lab links to a reusable setup, recovery or debugging reference.
+Each lab contains its essential setup and practical steps. Use this supplementary page for quick reference and recovery help during later labs.
 
 - [CircuitPython Board Reference and REPL]({{ '/support/circuitpython/' | relative_url }})
 
-Additional support pages will be added with the labs that require them.
+For BLE advertising, service discovery and messaging examples, see [Lab 3: BLE Advertising and Services]({{ '/labs/ble-telemetry/' | relative_url }}).

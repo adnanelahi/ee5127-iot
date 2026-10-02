@@ -18,4 +18,6 @@ These laboratories are unassessed practical activities. Use the investigations t
 
 - [Lab 2: Sensor Data Acquisition and Sampling]({{ '/labs/sensor-telemetry/' | relative_url }})
 
+- [Lab 3: BLE Advertising and Services]({{ '/labs/ble-telemetry/' | relative_url }})
+
 - [Support]({{ '/support/' | relative_url }})
