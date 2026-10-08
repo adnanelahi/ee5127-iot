@@ -20,4 +20,6 @@ These laboratories are unassessed practical activities. Use the investigations t
 
 - [Lab 3: BLE Advertising and Services]({{ '/labs/ble-telemetry/' | relative_url }})
 
+- [Lab 4: BLE Data Collection on a Gateway]({{ '/labs/rpi-ble-data-collection/' | relative_url }})
+
 - [Support]({{ '/support/' | relative_url }})
