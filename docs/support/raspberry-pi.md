@@ -7,7 +7,7 @@ permalink: /support/raspberry-pi/
 
 Use this page when preparing or recovering a Raspberry Pi gateway for [Lab 4]({{ '/labs/rpi-ble-data-collection/' | relative_url }}). The Pi runs Raspberry Pi OS **Desktop 64-bit** without a connected monitor, keyboard or mouse. You first connect from a laptop using SSH, then enable the Pi's WayVNC server and view its desktop with TigerVNC Viewer.
 
-Writing an image replaces the contents of the selected microSD card. Check the target device and preserve needed files first. Use the supplied, tested image and laboratory network details when these are provided.
+Writing an image replaces the contents of the selected microSD card. Check the target device and preserve needed files first. Use the laboratory network details provided for the session.
 
 ## 1. Prepare the microSD card
 

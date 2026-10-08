@@ -18,7 +18,7 @@ Use the Feather running the **full JSON UART program from Lab 3** and one gatewa
 
 The gateway is the **central** that scans and collects. The Feather is the **peripheral** that advertises your group's name, such as `EE5127-G001-UART`, and sends readings. Its JSON `nodeId` remains `feather-01`.
 
-Use the prepared gateway image. For first setup or recovery, follow the instructions for your board: [Raspberry Pi headless setup]({{ '/support/raspberry-pi/' | relative_url }}) or [ROCK 4C+ gateway setup]({{ '/support/rock-4c-plus/' | relative_url }}). The Pi page covers hostname and SSH setup in Imager, WayVNC and TigerVNC for a remote desktop, and VS Code installation on the Pi. Return here for the shared BLE activity.
+Set up your gateway before starting the BLE activity: follow [Raspberry Pi headless setup]({{ '/support/raspberry-pi/' | relative_url }}) or [ROCK 4C+ gateway setup]({{ '/support/rock-4c-plus/' | relative_url }}) for your board. The Pi page covers imaging, hostname and SSH setup, WayVNC and TigerVNC for a remote desktop, and VS Code installation on the Pi. Return here when your gateway is running and connected to the network.
 
 Download [scan_ble_devices.py]({{ '/assets/downloads/rpi-ble-data-collection/scan_ble_devices.py' | relative_url }}) and [ble_uart_collect.py]({{ '/assets/downloads/rpi-ble-data-collection/ble_uart_collect.py' | relative_url }}) to a folder named `ee5127-ble` on the gateway. Open a terminal in that folder and run:
 
@@ -134,7 +134,7 @@ For the obstructed run, compare the Feather and gateway counters within the gate
 - **Connection fails:** Move the Feather closer, check that Bluefruit is disconnected and rerun the collector. Only one central can use this UART connection at a time.
 - **No JSON records:** Confirm that the full Lab 3 UART program is running and that its serial console prints `JSON bytes including newline:`. Check the gateway terminal for a connection or notification error.
 - **Counter goes backwards:** Check whether the Feather restarted during collection. Record the restart before interpreting gaps.
-- **Gateway Bluetooth controller missing:** Follow the checks for your [Raspberry Pi]({{ '/support/raspberry-pi/' | relative_url }}) or [ROCK 4C+]({{ '/support/rock-4c-plus/' | relative_url }}), or ask the demonstrator for a prepared gateway.
+- **Gateway Bluetooth controller missing:** Follow the checks for your [Raspberry Pi]({{ '/support/raspberry-pi/' | relative_url }}) or [ROCK 4C+]({{ '/support/rock-4c-plus/' | relative_url }}). Ask the demonstrator to help check the adapter if it still does not appear.
 
 ## Further exploration
 

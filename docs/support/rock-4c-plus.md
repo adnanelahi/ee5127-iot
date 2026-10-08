@@ -5,7 +5,7 @@ nav_order: 3
 permalink: /support/rock-4c-plus/
 ---
 
-Use this page to prepare a ROCK 4C+ for [Lab 4]({{ '/labs/rpi-ble-data-collection/' | relative_url }}). A prepared ROCK 4C+ with working Bluetooth can go straight to the checks below.
+Use this page to assemble and set up a ROCK 4C+ for [Lab 4]({{ '/labs/rpi-ble-data-collection/' | relative_url }}).
 
 ## Assemble the starter kit
 
@@ -13,11 +13,11 @@ Before powering the board, follow the illustrated [ROCK 4C+ starter-kit assembly
 
 ## Prepare the operating system
 
-Use the supplied USB-C power supply, a microSD card or eMMC module with the laboratory image, and a monitor, keyboard and mouse for first setup. Radxa specifies a 5 V, 3 A power input and recommends a microSD card of at least 16 GB for installation.
+Use the supplied USB-C power supply, a microSD card or eMMC module, and a monitor, keyboard and mouse for first setup. Radxa specifies a 5 V, 3 A power input and recommends a microSD card of at least 16 GB for installation.
 
-If the board needs an operating system, obtain the **ROCK 4C+ Debian 12 Bookworm KDE** image from [Radxa's ROCK 4C+ download page](https://docs.radxa.com/en/rock4/rock4c+/download). Follow [Radxa's installation guide](https://docs.radxa.com/en/rock4/rock4c+/getting-started/install-os) to write the image to a microSD card or eMMC module. For a microSD card, Radxa's guide uses balenaEtcher: decompress the downloaded image if required, select the image, select the intended card and flash it. Writing an image replaces the card's existing contents, so check the selected target first.
+Obtain the **ROCK 4C+ Debian 12 Bookworm KDE** image from [Radxa's ROCK 4C+ download page](https://docs.radxa.com/en/rock4/rock4c+/download). Follow [Radxa's installation guide](https://docs.radxa.com/en/rock4/rock4c+/getting-started/install-os) to write the image to a microSD card or eMMC module. For a microSD card, Radxa's guide uses balenaEtcher: decompress the downloaded image if required, select the image, select the intended card and flash it. Writing an image replaces the card's existing contents, so check the selected target first.
 
-Insert the prepared storage, connect the display and input devices, then power on the ROCK 4C+. Follow the on-screen account setup if the kit image asks you to create a user. Radxa lists `radxa` as both the initial username and password for its downloadable official image; after logging in, run `passwd` in a terminal to set your own password. A laboratory-prepared image may have different login details. Connect to the laboratory network using Ethernet or Wi-Fi. Keep the wireless antenna connected when using Bluetooth.
+Insert the imaged storage, connect the display and input devices, then power on the ROCK 4C+. Follow any on-screen account setup. Radxa lists `radxa` as both the initial username and password for its downloadable official image; after logging in, run `passwd` in a terminal to set your own password. Connect to the laboratory network using Ethernet or Wi-Fi. Keep the wireless antenna connected when using Bluetooth.
 
 ## Check Linux and Bluetooth
 
