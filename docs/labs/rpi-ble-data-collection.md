@@ -18,23 +18,37 @@ Use the Feather running the **full JSON UART program from Lab 3** and one gatewa
 
 The gateway is the **central** that scans and collects. The Feather is the **peripheral** that advertises your group's name, such as `EE5127-G001-UART`, and sends readings. Its JSON `nodeId` remains `feather-01`.
 
-Set up your gateway before starting the BLE activity: follow [Raspberry Pi headless setup]({{ '/support/raspberry-pi/' | relative_url }}) or [ROCK 4C+ gateway setup]({{ '/support/rock-4c-plus/' | relative_url }}) for your board. The Pi page covers imaging, hostname and SSH setup, WayVNC and TigerVNC for a remote desktop, and VS Code installation on the Pi. Return here when your gateway is running and connected to the network.
+Set up your gateway before starting the BLE activity: follow [Raspberry Pi headless setup]({{ '/support/raspberry-pi/' | relative_url }}) or [ROCK 4C+ gateway setup]({{ '/support/rock-4c-plus/' | relative_url }}) for your board. The Pi page covers imaging, hostname and SSH setup, WayVNC and TigerVNC for a remote desktop, and VS Code installation on the Pi. The ROCK page covers kit assembly, imaging, Bluetooth and a TigerVNC desktop. Return here when your gateway is running and connected to the network.
 
-Download [scan_ble_devices.py]({{ '/assets/downloads/rpi-ble-data-collection/scan_ble_devices.py' | relative_url }}) and [ble_uart_collect.py]({{ '/assets/downloads/rpi-ble-data-collection/ble_uart_collect.py' | relative_url }}) to a folder named `ee5127-ble` on the gateway. Open a terminal in that folder and run:
+Open a terminal on the gateway and run these initial checks. The `~` in the folder path means your home directory (`/home/your-username`):
 
 ```bash
 hostname
+mkdir -p ~/Documents/ee5127-ble
+cd ~/Documents/ee5127-ble
 python3 --version
 bluetoothctl --version
 bluetoothctl show
+```
+
+In `bluetoothctl show`, a `Controller` line means the gateway detects a Bluetooth adapter; `Powered: yes` means it is switched on. If you see `Powered: no`, run `bluetoothctl power on` and check again. If the command reports `No default controller available`, follow your board's setup page or ask the demonstrator to check the adapter.
+
+Bleak requires BlueZ 5.55 or later on Linux. Create a Python environment in `ee5127-ble` and install Bleak, the library used by both gateway programs. If `python3 -m venv .venv` reports that `venv` is unavailable, install the image's `python3-venv` package with `sudo apt install python3-venv` and repeat the command.
+
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install bleak
 ```
 
-In `bluetoothctl show`, a `Controller` line means the gateway detects a Bluetooth adapter; `Powered: yes` means it is switched on. If you see `Powered: no`, run `bluetoothctl power on` and check again. If the command reports `No default controller available`, follow your board's setup page or ask the demonstrator to check the adapter.
+Download [scan_ble_devices.py]({{ '/assets/downloads/rpi-ble-data-collection/scan_ble_devices.py' | relative_url }}) and [ble_uart_collect.py]({{ '/assets/downloads/rpi-ble-data-collection/ble_uart_collect.py' | relative_url }}) into `~/Documents/ee5127-ble` on the gateway.
 
-Bleak requires BlueZ 5.55 or later on Linux. The activated Python environment holds Bleak, the library used by both gateway programs. In a new terminal, return to the folder and run `source .venv/bin/activate` before using the programs. If `python3 -m venv .venv` reports that `venv` is unavailable, install the image's `python3-venv` package with `sudo apt install python3-venv` and repeat that command.
+Whenever you open a new terminal on the gateway, return to this folder and activate its Python environment before running either program:
+
+```bash
+cd ~/Documents/ee5127-ble
+source .venv/bin/activate
+```
 
 ## Practical investigation
 

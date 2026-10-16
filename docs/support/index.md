@@ -7,10 +7,10 @@ permalink: /support/
 
 # Support Material
 
-Each lab contains its essential setup and practical steps. Use these supplementary pages for quick reference and gateway setup or recovery.
+Each lab contains its essential setup and practical steps. Use these supplementary pages when you need additional reference or recovery help.
 
 - [CircuitPython Board Reference and REPL]({{ '/support/circuitpython/' | relative_url }})
-- [Raspberry Pi Headless Setup and Recovery]({{ '/support/raspberry-pi/' | relative_url }}): Imager, hostname and SSH setup, WayVNC/TigerVNC desktop access, and VS Code installation.
-- [ROCK 4C+ Gateway Setup]({{ '/support/rock-4c-plus/' | relative_url }}): starter-kit assembly, operating-system setup, and Bluetooth checks.
+- [Raspberry Pi Headless Setup and Recovery]({{ '/support/raspberry-pi/' | relative_url }}): imaging, SSH, WayVNC and TigerVNC desktop access, and VS Code installation on the Pi.
+- [ROCK 4C+ Gateway Setup]({{ '/support/rock-4c-plus/' | relative_url }}): kit assembly, image installation, Bluetooth checks and TigerVNC desktop setup.
 
 For BLE device advertising and services, see [Lab 3]({{ '/labs/ble-telemetry/' | relative_url }}). For gateway scanning and collection, see [Lab 4]({{ '/labs/rpi-ble-data-collection/' | relative_url }}).

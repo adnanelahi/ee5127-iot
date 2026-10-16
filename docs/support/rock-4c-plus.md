@@ -41,8 +41,72 @@ bluetoothctl show
 
 If the controller is listed but powered off, run `bluetoothctl power on` and check `bluetoothctl show` again. If `bluetoothctl` is missing, or no controller appears, check the ROCK 4C+ image, wireless antenna and Bluetooth software with the demonstrator. Radxa's [Bluetooth guidance](https://docs.radxa.com/en/rock4/rock4ab-se/getting-started/interface-usage/witibt) gives further service and firmware checks for the ROCK 4 series.
 
+## Set up a remote KDE desktop with VNC
+
+These steps use the **Debian 12 KDE image** named above. TigerVNC creates a separate KDE X11 desktop on display `:2` (TCP port `5902`). Work at the ROCK 4C+ terminal as your usual account; the VNC password and startup file belong in that account's home directory.
+
+Install the server and the D-Bus launcher, then create a VNC password. Choose `n` if asked for a view-only password:
+
+```bash
+sudo apt update
+sudo apt install tigervnc-standalone-server tigervnc-tools dbus-x11
+mkdir -p ~/.vnc
+tigervncpasswd
+```
+
+Open the startup file with `nano ~/.vnc/xstartup` and enter:
+
+```sh
+#!/bin/sh
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+exec dbus-launch startplasma-x11
+```
+
+Save with **Ctrl+O**, **Enter**, then **Ctrl+X**. Make the file executable and start a test session:
+
+```bash
+chmod +x ~/.vnc/xstartup
+vncserver -localhost no :2
+vncserver -list
+```
+
+The list should show display `:2` on port `5902`. On your laptop, install [TigerVNC Viewer](https://github.com/TigerVNC/tigervnc/releases) and connect to `<ROCK-IP-address>:2`. You can find the ROCK 4C+'s local IP address with `hostname -I`. Enter the **VNC password** you set above. The `-localhost no` option lets the laptop reach the VNC server over the laboratory network.
+
+After the test, stop the manually started session:
+
+```bash
+vncserver -kill :2
+```
+
+To start the VNC desktop automatically when the ROCK 4C+ boots, first check that `command -v vncserver` prints `/usr/bin/vncserver`. If it prints another path, use that path on the three `Exec` lines below. Run the following from your usual account. The shell places that account's name in the service file:
+
+```bash
+VNC_ACCOUNT="$(id -un)"
+echo "[Unit]
+Description=VNC Server
+After=network.target
+
+[Service]
+Type=forking
+User=$VNC_ACCOUNT
+ExecStartPre=-/usr/bin/vncserver -kill :2
+ExecStart=/usr/bin/vncserver -localhost no :2
+ExecStop=/usr/bin/vncserver -kill :2
+
+[Install]
+WantedBy=multi-user.target" | sudo tee /etc/systemd/system/vnc.service
+
+sudo systemctl daemon-reload
+sudo systemctl enable vnc.service
+sudo systemctl start vnc.service
+sudo systemctl status vnc.service --no-pager
+```
+
+The status should show that the service is active. Reboot the board and reconnect to `<ROCK-IP-address>:2` to check that the service starts again. If it does not, inspect `sudo journalctl -u vnc.service -b --no-pager` for the startup error.
+
 Return to [Lab 4]({{ '/labs/rpi-ble-data-collection/' | relative_url }}) to create the Python environment, scan for the Feather and collect its data.
 
 ## References
 
-[ROCK 4C+ starter-kit assembly guide](https://www.rs-online.com/designspark/get-started-with-the-radxa-rock-4c-4gb-starter-kit), [Radxa ROCK 4C+ overview](https://docs.radxa.com/en/rock4/rock4c+/getting-started/overview), [Radxa ROCK 4C+ downloads](https://docs.radxa.com/en/rock4/rock4c+/download), [Radxa installation guide](https://docs.radxa.com/en/rock4/rock4c+/getting-started/install-os), [Bleak Linux support](https://bleak.readthedocs.io/en/latest/).
+[ROCK 4C+ starter-kit assembly guide](https://www.rs-online.com/designspark/get-started-with-the-radxa-rock-4c-4gb-starter-kit), [Radxa ROCK 4C+ overview](https://docs.radxa.com/en/rock4/rock4c+/getting-started/overview), [Radxa installation guide](https://docs.radxa.com/en/rock4/rock4c+/getting-started/install-os), [Radxa VNC setup](https://docs.radxa.com/en/rock4/rock4ab-se/getting-started/basic-software-conf#vnc), [TigerVNC server manual](https://manpages.debian.org/bookworm/tigervnc-standalone-server/tigervncserver.1.en.html), [Bleak Linux support](https://bleak.readthedocs.io/en/latest/).
