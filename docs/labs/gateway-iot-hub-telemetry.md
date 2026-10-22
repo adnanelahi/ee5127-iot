@@ -42,6 +42,10 @@ Use Microsoft's [Product Availability by Region](https://azure.microsoft.com/en-
 3. Enter a globally unique **IoT hub name** containing your group ID, such as `ee5127-g001-iot-1234`; avoid personal information. Select a **Region** allowed by your subscription where IoT Hub is available.
 4. Under **Tier**, select **Free** if it is available. Check the displayed daily message limit. If **Free** is unavailable, ask the demonstrator before selecting a tier that uses student credit.
 
+![Azure portal IoT Hub Basics form showing the subscription, resource group, hub name, region, Free tier and daily message limit]({{ '/assets/images/azure/iot-hub-creation-basics.png' | relative_url }})
+
+The screenshot shows an earlier portal layout. On your screen, select **Azure for Students**, a region allowed by your subscription, and the **Free** IoT Hub tier. The red “Free Trial” note in the screenshot refers to an older subscription choice.
+
 5. On **Networking**, select **Public access** so the web simulator and gateway can reach the Hub over the Internet.
 6. On **Management**, select **Allow shared access policies** for the connection-string activities below.
 7. Review **Add-ons** and **Tags**. Select **Review + create** and check that validation succeeds for your subscription, region and tier. Check the configuration once more, then select **Create**. When deployment finishes, select **Go to resource**.
