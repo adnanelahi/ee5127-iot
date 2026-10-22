@@ -20,7 +20,45 @@ The simulator and gateway use the **device connection string** from **Device man
 
 ## Azure CLI installed on your computer
 
-Install Azure CLI, sign in to the subscription that contains your Hub, and add the Azure IoT extension by following [Azure CLI on Your Computer]({{ '/support/azure-cli/' | relative_url }}).
+### Install Azure CLI
+
+On Windows, open **PowerShell** and install Azure CLI with Windows Package Manager:
+
+```powershell
+winget install --exact --id Microsoft.AzureCLI
+```
+
+When installation finishes, close PowerShell and open a new PowerShell window. Run `az version` to check that Azure CLI works. If `winget` is unavailable, use the installer in Microsoft's [Azure CLI installation instructions for Windows](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?pivots=winget).
+
+On other computers, follow Microsoft's [macOS](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-macos) or [Linux](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux) instructions, then run the commands below in your terminal.
+
+### Sign in and select the subscription
+
+Run `az login` and complete the Microsoft sign-in window using the account linked to your Azure for Students subscription. If Azure CLI asks you to choose a subscription, select **Azure for Students**. Check the selected subscription:
+
+```powershell
+az account show --output table
+```
+
+If another subscription is selected, list those available to your account and select the Azure for Students **SubscriptionId**:
+
+```powershell
+az account list --output table
+az account set --subscription "YOUR_SUBSCRIPTION_ID"
+az account show --output table
+```
+
+If the sign-in window does not open, run `az login --use-device-code` and follow the address and code shown in the terminal. On a shared computer, run `az logout` when you finish monitoring.
+
+Install the Azure IoT extension after signing in:
+
+```powershell
+az extension add --name azure-iot
+```
+
+See Microsoft's [Azure CLI sign-in](https://learn.microsoft.com/en-us/cli/azure/authenticate-azure-cli-interactively) and [subscription selection](https://learn.microsoft.com/en-us/cli/azure/manage-azure-subscriptions-azure-cli) guides for more detail.
+
+### Monitor incoming messages
 
 Start monitoring. Replace `YOUR_HUB_NAME` and `YOUR_DEVICE_ID` with the values from your Hub:
 

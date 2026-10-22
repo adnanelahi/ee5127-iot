@@ -14,5 +14,4 @@ permalink: /course-summary/
   - [CircuitPython Board Reference and REPL]({{ '/support/circuitpython/' | relative_url }})
   - [Raspberry Pi Headless Setup and Recovery]({{ '/support/raspberry-pi/' | relative_url }})
   - [ROCK 4C+ Gateway Setup]({{ '/support/rock-4c-plus/' | relative_url }})
-  - [Azure CLI on Your Computer]({{ '/support/azure-cli/' | relative_url }})
   - [Monitoring Azure IoT Hub]({{ '/support/monitor-iot-hub/' | relative_url }})
