@@ -20,23 +20,7 @@ The simulator and gateway use the **device connection string** from **Device man
 
 ## Azure CLI installed on your computer
 
-On Windows, open **PowerShell** and install Azure CLI:
-
-```powershell
-winget install --exact --id Microsoft.AzureCLI
-```
-
-Close PowerShell, reopen it, and check the installation with `az version`. If `winget` is unavailable, use Microsoft's [Windows installer instructions](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?pivots=winget). For macOS or Linux, use Microsoft's [macOS](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-macos) or [Linux](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux) installation guide.
-
-Sign in with the account that hosts the Hub, check its selected subscription, and install the Azure IoT extension:
-
-```powershell
-az login
-az account show --output table
-az extension add --name azure-iot
-```
-
-If another subscription is selected, use `az account list --output table` to find the Azure for Students **SubscriptionId**, then run `az account set --subscription "YOUR_SUBSCRIPTION_ID"`. If the sign-in window does not open, try `az login --use-device-code`. See [Azure CLI on Your Computer]({{ '/support/azure-cli/' | relative_url }}) for the full installation and sign-in steps.
+Install Azure CLI, sign in to the subscription that contains your Hub, and add the Azure IoT extension by following [Azure CLI on Your Computer]({{ '/support/azure-cli/' | relative_url }}).
 
 Start monitoring. Replace `YOUR_HUB_NAME` and `YOUR_DEVICE_ID` with the values from your Hub:
 
