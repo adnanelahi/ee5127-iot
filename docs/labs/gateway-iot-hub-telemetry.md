@@ -38,17 +38,23 @@ Use Microsoft's [Product Availability by Region](https://azure.microsoft.com/en-
 ### Create the Hub
 
 1. Sign in to the [Azure portal](https://portal.azure.com/). Select **+ Create a resource**, choose **Internet of Things**, then **IoT Hub**. You can also search the Marketplace for **IoT Hub**.
-2. On **Basics**, select your **Azure for Students** subscription. Create a resource group with your group ID in its name, such as `ee5127-g001-rg`, and choose one of your allowed regions for that resource group.
-3. Enter a globally unique **IoT hub name** containing your group ID, such as `ee5127-g001-iot-1234`; avoid personal information. Select a **Region** allowed by your subscription where IoT Hub is available.
-4. Under **Tier**, select **Free** if it is available. Check the displayed daily message limit. If **Free** is unavailable, ask the demonstrator before selecting a tier that uses student credit.
+2. On **Basics**, use the entries below. Replace `g001` with your group ID. Choose a region allowed by your subscription where IoT Hub is available.
 
-![Azure portal IoT Hub Basics form showing the subscription, resource group, hub name, region, Free tier and daily message limit]({{ '/assets/images/azure/iot-hub-creation-basics.png' | relative_url }})
+| Field | Entry |
+| --- | --- |
+| Subscription | **Azure for Students** |
+| Resource group | Create new: `ee5127-g001-rg` |
+| Resource group region, if requested | One of your subscription's allowed regions |
+| IoT hub name | `ee5127-g001-iot-1234` (change the final digits to make the name globally unique) |
+| Region | An allowed region that offers IoT Hub |
+| Tier | **Free**, if available |
+| Daily message limit | Check the limit displayed for the Free tier |
 
-The screenshot shows an earlier portal layout. On your screen, select **Azure for Students**, a region allowed by your subscription, and the **Free** IoT Hub tier. The red “Free Trial” note in the screenshot refers to an older subscription choice.
+Keep personal information out of the Hub name. If **Free** is unavailable, ask the demonstrator before selecting a tier that uses student credit.
 
-5. On **Networking**, select **Public access** so the web simulator and gateway can reach the Hub over the Internet.
-6. On **Management**, select **Allow shared access policies** for the connection-string activities below.
-7. Review **Add-ons** and **Tags**. Select **Review + create** and check that validation succeeds for your subscription, region and tier. Check the configuration once more, then select **Create**. When deployment finishes, select **Go to resource**.
+3. On **Networking**, select **Public access** so the web simulator and gateway can reach the Hub over the Internet.
+4. On **Management**, select **Allow shared access policies** for the connection-string activities below.
+5. Review **Add-ons** and **Tags**. Select **Review + create** and check that validation succeeds for your subscription, region and tier. Check the configuration once more, then select **Create**. When deployment finishes, select **Go to resource**.
 
 The Hub is the cloud service that accepts messages. A registered device identity specifies which sender may connect to it.
 
