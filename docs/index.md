@@ -22,4 +22,6 @@ These laboratories are unassessed practical activities. Use the investigations t
 
 - [Lab 4: BLE Data Collection on a Gateway]({{ '/labs/rpi-ble-data-collection/' | relative_url }})
 
+- [Lab 5: Gateway Telemetry to Azure IoT Hub]({{ '/labs/gateway-iot-hub-telemetry/' | relative_url }})
+
 - [Support]({{ '/support/' | relative_url }})
