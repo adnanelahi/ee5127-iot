@@ -114,6 +114,7 @@ On the Raspberry Pi or ROCK 4C+, open a terminal and activate the Python environ
 cd ~/Documents/ee5127-ble
 source .venv/bin/activate
 python --version
+python -m pip install wheel
 python -m pip install azure-iot-device
 head -n 1 near.jsonl
 ```
@@ -186,12 +187,19 @@ if __name__ == "__main__":
 
 `read_records()` selects the first five gateway records. `send_records()` sends each complete JSON object and prints its `counter`. `main()` connects using the device connection string and closes the connection when the run ends. The five-message limit keeps the test short and makes its output easy to inspect.
 
-Enter the device connection string in the **same gateway terminal** without displaying it. Paste when prompted, press Enter, then run the program:
+Copy and paste the following three commands into the **same gateway terminal**, then press Enter:
 
 ```bash
 read -r -s -p "Device connection string: " IOTHUB_DEVICE_CONNECTION_STRING
 printf '\n'
 export IOTHUB_DEVICE_CONNECTION_STRING
+```
+
+The terminal prompts with `Device connection string:`. Copy your device's full **Primary connection string** from the Azure portal, then right-click in the gateway terminal to paste it at this prompt. The connection string will not appear on screen. Press Enter after pasting. Use the complete connection string, including `HostName`, `DeviceId` and `SharedAccessKey`.
+
+Once the terminal returns to its usual command prompt, run the sender separately:
+
+```bash
 python send_gateway_telemetry.py
 ```
 
