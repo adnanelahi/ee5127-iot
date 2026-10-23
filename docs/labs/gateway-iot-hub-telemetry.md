@@ -6,11 +6,11 @@ permalink: /labs/gateway-iot-hub-telemetry/
 
 ## Aim
 
-Create an Azure IoT Hub, check it with a web simulator, and then send Feather sensor records from the Lab 4 gateway to the same Hub. Monitor the messages in Azure Cloud Shell to trace what each sender delivered.
+Create an Azure IoT Hub, check it with a web simulator, and then send Feather sensor records from the Lab 4 gateway to the same Hub, first with the Azure Python device library and then with the Paho MQTT library. Monitor the messages in Azure Cloud Shell to trace what each sender delivered.
 
 ## Learning outcomes
 
-You can create an IoT Hub and register a device identity, monitor its messages with Azure CLI, send gateway JSON records with the Azure Python device library, and match a cloud message to its gateway record.
+You can create an IoT Hub and register a device identity, monitor its messages with Azure CLI, send gateway JSON records with the Azure Python device library, send the same records over MQTT with Paho by supplying the topic, credentials and TLS settings yourself, and match a cloud message to its gateway record.
 
 ## Equipment and starting point
 
@@ -18,11 +18,12 @@ You need an Azure for Students subscription, a browser, and the Raspberry Pi or 
 
 If you are working in a group, decide whose Azure for Students subscription will host the group's IoT Hub. Work together on the account holder's computer for the portal and Cloud Shell steps. Keep connection strings private. Keep the Hub available for later cloud labs.
 
-The two transmissions in this lab use the same registered device identity, one at a time:
+The three transmissions in this lab use the same registered device identity, one at a time:
 
 ```text
 Web simulator → IoT Hub → Cloud Shell monitor
-Feather → BLE gateway → near.jsonl → IoT Hub → Cloud Shell monitor
+Feather → BLE gateway → near.jsonl → Azure device library → IoT Hub → Cloud Shell monitor
+Feather → BLE gateway → near.jsonl → Paho MQTT → IoT Hub → Cloud Shell monitor
 ```
 
 ## 1. Create an IoT Hub
@@ -215,6 +216,149 @@ Find one of the gateway counters in the Cloud Shell monitor. Compare its `nodeId
 
 The registered IoT Hub device ID identifies the sending application on the gateway. The `nodeId` field identifies the Feather whose readings are carried in the JSON body. The simulator's messages use the same registered device ID during the first test, while their payload fields come from its simulated sensor.
 
+## 7. Send the same records with Paho MQTT
+
+The Azure device library in Section 5 sends its messages over MQTT. In this section the gateway sends the same five records with the Paho MQTT library directly, so you supply the connection details that the device library handled for you. Paho is already installed in `.venv`, because `azure-iot-device` depends on it.
+
+IoT Hub accepts MQTT 3.1.1 over TLS on port 8883, but it is not a general MQTT broker. A device may publish telemetry only to its own fixed topic, `devices/{device-id}/messages/events/`. Text appended to that topic is read as message properties; here it sets the content type and encoding, which `message.content_type` and `message.content_encoding` set in Section 5. The connection uses these values:
+
+| MQTT field | Value |
+| --- | --- |
+| Client ID | The device ID |
+| Username | `{hub-name}.azure-devices.net/{device-id}/?api-version=2021-04-12` |
+| Password | A SAS token signed with the device key |
+| Topic | `devices/{device-id}/messages/events/$.ct=application%2Fjson&$.ce=utf-8` |
+| QoS | 1 (IoT Hub does not accept QoS 2) |
+
+Download [send_gateway_mqtt.py]({{ '/assets/downloads/gateway-iot-hub/send_gateway_mqtt.py' | relative_url }}) into `~/Documents/ee5127-ble`. Its complete code is shown below:
+
+```python
+"""Send a few Lab 4 gateway records to Azure IoT Hub with Paho MQTT."""
+
+import base64
+import hashlib
+import hmac
+import json
+import os
+import ssl
+import time
+import urllib.parse
+
+import certifi
+import paho.mqtt.client as mqtt
+
+
+DATA_FILE = "near.jsonl"
+MAX_RECORDS = 5
+API_VERSION = "2021-04-12"
+TOKEN_LIFETIME_S = 3600
+
+
+def read_records(filename):
+    """Read up to five complete JSON records from the gateway file."""
+    records = []
+    with open(filename, encoding="utf-8") as source:
+        for line in source:
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            if not isinstance(record, dict) or "counter" not in record:
+                raise ValueError("Expected a JSON object with a counter")
+            records.append(record)
+            if len(records) == MAX_RECORDS:
+                break
+    return records
+
+
+def parse_connection_string(text):
+    """Split HostName=...;DeviceId=...;SharedAccessKey=... into its parts."""
+    parts = dict(item.split("=", 1) for item in text.strip().split(";") if item)
+    return parts["HostName"], parts["DeviceId"], parts["SharedAccessKey"]
+
+
+def make_sas_token(host, device_id, key, lifetime_s):
+    """Sign the resource URI and expiry time with the device key (HMAC-SHA256)."""
+    uri = f"{host}/devices/{device_id}"
+    expiry = str(int(time.time()) + lifetime_s)
+    to_sign = f"{urllib.parse.quote_plus(uri)}\n{expiry}".encode("utf-8")
+    digest = hmac.new(base64.b64decode(key), to_sign, hashlib.sha256).digest()
+    signature = base64.b64encode(digest).decode("utf-8")
+    fields = {"sr": uri, "sig": signature, "se": expiry}
+    return "SharedAccessSignature " + urllib.parse.urlencode(fields)
+
+
+def main():
+    connection_string = os.environ.get("IOTHUB_DEVICE_CONNECTION_STRING")
+    if not connection_string:
+        raise SystemExit("Set IOTHUB_DEVICE_CONNECTION_STRING in this terminal first.")
+
+    records = read_records(DATA_FILE)
+    if not records:
+        raise SystemExit(f"No records found in {DATA_FILE}.")
+
+    host, device_id, key = parse_connection_string(connection_string)
+    topic = f"devices/{device_id}/messages/events/$.ct=application%2Fjson&$.ce=utf-8"
+
+    client = mqtt.Client(client_id=device_id, protocol=mqtt.MQTTv311)
+    client.username_pw_set(
+        username=f"{host}/{device_id}/?api-version={API_VERSION}",
+        password=make_sas_token(host, device_id, key, TOKEN_LIFETIME_S),
+    )
+    client.tls_set(ca_certs=certifi.where(), tls_version=ssl.PROTOCOL_TLSv1_2)
+
+    client.connect(host, port=8883)
+    client.loop_start()
+    try:
+        for _ in range(100):
+            if client.is_connected():
+                break
+            time.sleep(0.1)
+        else:
+            raise SystemExit("IoT Hub did not accept the connection. Check the connection string.")
+
+        print("Connected as", device_id)
+        print("Topic:", topic)
+        for record in records:
+            info = client.publish(topic, json.dumps(record), qos=1)
+            info.wait_for_publish(timeout=10)
+            if not info.is_published():
+                raise SystemExit(f"No acknowledgement for counter {record['counter']}.")
+            print("Sent counter:", record["counter"])
+            time.sleep(2)
+    finally:
+        client.disconnect()
+        client.loop_stop()
+
+    print("Sent", len(records), "records to IoT Hub over MQTT.")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+`read_records()` is the same as in Section 5. `parse_connection_string()` takes the host name, device ID and key from the device connection string. `make_sas_token()` builds the password: it signs the device's resource URI and an expiry time one hour ahead with the device key, using HMAC-SHA256, so the key itself is never sent. `main()` sets the client ID, username, password and TLS settings, connects on port 8883 and publishes each record at QoS 1. It prints a counter only after IoT Hub has acknowledged that message. The certificate bundle from `certifi`, installed with the device library, contains the DigiCert root certificate that IoT Hub presents.
+
+Do not upgrade `paho-mqtt` in this environment. The Azure device library requires a version below 2.0, and the script uses the Paho 1.x interface.
+
+1. Check that the Section 5 sender has finished. IoT Hub keeps one MQTT connection per device identity, and a new connection closes the previous one.
+2. In Cloud Shell, restart the monitor with the message properties shown:
+
+   ```bash
+   az iot hub monitor-events --hub-name YOUR_HUB_NAME --device-id YOUR_DEVICE_ID --properties sys --transport amqp_ws --timeout 0
+   ```
+
+3. In the gateway terminal, set the device connection string with the three commands from Section 5 if it is no longer set, then run:
+
+   ```bash
+   python send_gateway_mqtt.py
+   ```
+
+   The gateway prints the device ID, the topic, five `Sent counter:` lines and a final total. Clear the shell variable afterwards with `unset IOTHUB_DEVICE_CONNECTION_STRING`.
+
+4. Find the five counters in the Cloud Shell monitor and compare one of them with the same counter from Section 5. Run `python send_gateway_telemetry.py` again with this monitor running if you want to see both senders' messages with their properties.
+
+The message body is the same JSON record in both runs, and both runs carry the same content type, encoding and registered device ID.
+
 ## Observations and reflection
 
 - Which value in the simulator console matched a message in the Cloud Shell monitor?
@@ -232,9 +376,11 @@ The registered IoT Hub device ID identifies the sending application on the gatew
 - **Python import fails:** Activate `.venv` in this terminal and run `python -m pip install azure-iot-device` again.
 - **The gateway cannot connect:** Check network access, the enabled device identity and its complete device connection string. Ask the demonstrator to check whether the network allows the IoT Hub connection.
 - **Only some counters appear in the monitor:** Start monitoring before running the sender. Rerun the same five-record file if you missed the start of the short transmission.
+- **The Paho script reports that IoT Hub did not accept the connection:** Check that the complete device connection string is set in this terminal and that the network allows port 8883. A key copied incompletely produces a SAS token that IoT Hub rejects.
+- **`paho.mqtt` or `certifi` cannot be imported:** Activate `.venv` in this terminal. Both packages are installed with `azure-iot-device`; reinstall it with `python -m pip install azure-iot-device` if they are missing.
 
-Stop the simulator, the Cloud Shell monitor and the gateway program when finished. Keep `near.jsonl`, the working sender and the IoT Hub for later cloud activities.
+Stop the simulator, the Cloud Shell monitor and the gateway programs when finished. Keep `near.jsonl`, the working senders and the IoT Hub for later cloud activities.
 
 ## References
 
-[Azure for Students](https://azure.microsoft.com/en-us/free/students/), [Azure for Students eligibility](https://learn.microsoft.com/en-us/azure/education-hub/about-azure-for-students), [create an IoT Hub](https://learn.microsoft.com/en-us/azure/iot-hub/create-hub), [register a device identity](https://learn.microsoft.com/en-us/azure/iot-hub/create-connect-device), [Cloud Shell setup](https://learn.microsoft.com/en-us/azure/cloud-shell/get-started/ephemeral), [Azure IoT CLI monitoring](https://learn.microsoft.com/en-us/cli/azure/iot/hub#az-iot-hub-monitor-events), [Raspberry Pi web simulator](https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-raspberry-pi-kit-node-get-started), [Azure IoT Device SDK for Python](https://learn.microsoft.com/en-us/python/api/azure-iot-device/azure.iot.device.iothubdeviceclient?view=azure-python).
+[Azure for Students](https://azure.microsoft.com/en-us/free/students/), [Azure for Students eligibility](https://learn.microsoft.com/en-us/azure/education-hub/about-azure-for-students), [create an IoT Hub](https://learn.microsoft.com/en-us/azure/iot-hub/create-hub), [register a device identity](https://learn.microsoft.com/en-us/azure/iot-hub/create-connect-device), [Cloud Shell setup](https://learn.microsoft.com/en-us/azure/cloud-shell/get-started/ephemeral), [Azure IoT CLI monitoring](https://learn.microsoft.com/en-us/cli/azure/iot/hub#az-iot-hub-monitor-events), [Raspberry Pi web simulator](https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-raspberry-pi-kit-node-get-started), [Azure IoT Device SDK for Python](https://learn.microsoft.com/en-us/python/api/azure-iot-device/azure.iot.device.iothubdeviceclient?view=azure-python), [MQTT with IoT Hub](https://learn.microsoft.com/en-us/azure/iot/iot-mqtt-connect-to-iot-hub), [SAS tokens for devices](https://learn.microsoft.com/en-us/azure/iot-hub/authenticate-authorize-sas), [Eclipse Paho Python client 1.6.1](https://pypi.org/project/paho-mqtt/1.6.1/).
