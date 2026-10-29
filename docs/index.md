@@ -26,4 +26,6 @@ These laboratories are unassessed practical activities. Use the investigations t
 
 - [Streaming and Storing Sensor Data in the IoT Cloud]({{ '/labs/sensor-data-streaming-storage/' | relative_url }})
 
+- [Data Analytics and Machine Learning in the IoT Cloud]({{ '/labs/data-analytics-machine-learning/' | relative_url }})
+
 - [Support]({{ '/support/' | relative_url }})
