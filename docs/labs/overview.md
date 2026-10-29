@@ -14,5 +14,6 @@ These practical activities follow sensor data from the Feather through a BLE gat
 | [3 — BLE Advertising and Services]({{ '/labs/ble-telemetry/' | relative_url }}) | Explore BLE broadcasts, beacons, services and UART telemetry. |
 | [4 — BLE Data Collection on a Gateway]({{ '/labs/rpi-ble-data-collection/' | relative_url }}) | Collect Feather records on a Raspberry Pi or ROCK 4C+. |
 | [5 — Gateway Telemetry to Azure IoT Hub]({{ '/labs/gateway-iot-hub-telemetry/' | relative_url }}) | Create an IoT Hub, test it with a simulator and send gateway records. |
+| [Streaming and Storing Sensor Data in the IoT Cloud]({{ '/labs/sensor-data-streaming-storage/' | relative_url }}) | Process gateway records with Stream Analytics, store them in Blob Storage and measure the delay at each stage. |
 
 [Support material]({{ '/support/' | relative_url }}) provides setup and recovery guidance.

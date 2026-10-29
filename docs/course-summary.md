@@ -10,6 +10,7 @@ permalink: /course-summary/
   - [Lab 3: BLE Advertising and Services]({{ '/labs/ble-telemetry/' | relative_url }})
   - [Lab 4: BLE Data Collection on a Gateway]({{ '/labs/rpi-ble-data-collection/' | relative_url }})
   - [Lab 5: Gateway Telemetry to Azure IoT Hub]({{ '/labs/gateway-iot-hub-telemetry/' | relative_url }})
+  - [Streaming and Storing Sensor Data in the IoT Cloud]({{ '/labs/sensor-data-streaming-storage/' | relative_url }})
 - [Support Material]({{ '/support/' | relative_url }})
   - [CircuitPython Board Reference and REPL]({{ '/support/circuitpython/' | relative_url }})
   - [Raspberry Pi Headless Setup and Recovery]({{ '/support/raspberry-pi/' | relative_url }})

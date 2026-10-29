@@ -24,4 +24,6 @@ These laboratories are unassessed practical activities. Use the investigations t
 
 - [Lab 5: Gateway Telemetry to Azure IoT Hub]({{ '/labs/gateway-iot-hub-telemetry/' | relative_url }})
 
+- [Streaming and Storing Sensor Data in the IoT Cloud]({{ '/labs/sensor-data-streaming-storage/' | relative_url }})
+
 - [Support]({{ '/support/' | relative_url }})
