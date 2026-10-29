@@ -28,7 +28,7 @@ The worked example uses the Occupancy Detection dataset. Its records come from s
 | `HumidityRatio` | Mass of water vapour per mass of dry air, derived from temperature and humidity, in kg/kg |
 | `Occupancy` | 1 for occupied, 0 for empty |
 
-If your group has chosen a different dataset for its project, you can use it in place of the example. Prepare it as a CSV file with one header row, one column holding the value you want to predict, and numeric columns for the features. The steps below point out where your column names replace the example's.
+You can follow these steps with your own data. Prepare it as a CSV file with one header row, one column holding the value you want to predict, and numeric columns for the features. The steps below point out where your column names replace the example's.
 
 The model in this lab predicts `Occupancy` from `Temperature`, `Humidity`, `Light`, `CO2` and `HumidityRatio`.
 
@@ -229,7 +229,7 @@ The compute cluster scales down to zero nodes 120 seconds after the pipeline fin
 
 ## Troubleshooting
 
-- **The workspace cannot be created in your region:** check that the region is allowed by your subscription's policy and offers Azure Machine Learning, as you checked for IoT Hub. Ask the demonstrator before choosing a region that differs from your Hub's.
+- **The workspace cannot be created in your region:** check that the region is allowed by your subscription's policy and offers Azure Machine Learning, as you checked for IoT Hub.
 - **No virtual machine size can be selected, or the cluster fails with a quota error:** Azure for Students limits the number of processor cores per region. Choose a smaller size, or ask the demonstrator.
 - **The data asset does not appear in the designer:** check that you chose the **Tabular** type from the v1 dataset types when creating it, and refresh the **Data** list in the designer.
 - **A column cannot be found in Select Columns in Dataset or Train Model:** open the data asset's **Explore** tab and copy the exact column name; names are case-sensitive.
