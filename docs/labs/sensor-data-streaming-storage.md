@@ -375,7 +375,7 @@ Keep the storage account, the container with its stored records, the Stream Anal
 
 ## Troubleshooting and finishing
 
-- **`timedatectl` reports that the clock is unsynchronised:** check the gateway's network connection and wait a minute. Ask the demonstrator if the university network blocks NTP.
+- **`timedatectl` reports that the clock is unsynchronised:** check the gateway's network connection and wait a minute. Ask the Teaching Support Staff (TSS) if the university network blocks NTP.
 - **The storage account name is rejected:** use only lowercase letters and digits, 3 to 24 characters, and change the final digits until the name is unique.
 - **The consumer group cannot be saved:** check that you are on the **Built-in endpoints** page of your Hub and that the name contains only letters, digits, hyphens, periods and underscores.
 - **The input preview is empty:** run the replay program and refresh the preview. Check that the input uses your Hub, the `streamanalytics` consumer group and the **service** policy.

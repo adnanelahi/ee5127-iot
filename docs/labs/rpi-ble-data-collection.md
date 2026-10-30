@@ -31,7 +31,7 @@ bluetoothctl --version
 bluetoothctl show
 ```
 
-In `bluetoothctl show`, a `Controller` line means the gateway detects a Bluetooth adapter; `Powered: yes` means it is switched on. If you see `Powered: no`, run `bluetoothctl power on` and check again. If the command reports `No default controller available`, follow your board's setup page or ask the demonstrator to check the adapter.
+In `bluetoothctl show`, a `Controller` line means the gateway detects a Bluetooth adapter; `Powered: yes` means it is switched on. If you see `Powered: no`, run `bluetoothctl power on` and check again. If the command reports `No default controller available`, follow your board's setup page or ask the Teaching Support Staff (TSS) to check the adapter.
 
 Bleak requires BlueZ 5.55 or later on Linux. Create a Python environment in `ee5127-ble` and install Bleak, the library used by both gateway programs. If `python3 -m venv .venv` reports that `venv` is unavailable, install the image's `python3-venv` package with `sudo apt install python3-venv` and repeat the command.
 
@@ -148,7 +148,7 @@ For the obstructed run, compare the Feather and gateway counters within the gate
 - **Connection fails:** Move the Feather closer, check that Bluefruit is disconnected and rerun the collector. Only one central can use this UART connection at a time.
 - **No JSON records:** Confirm that the full Lab 3 UART program is running and that its serial console prints `JSON bytes including newline:`. Check the gateway terminal for a connection or notification error.
 - **Counter goes backwards:** Check whether the Feather restarted during collection. Record the restart before interpreting gaps.
-- **Gateway Bluetooth controller missing:** Follow the checks for your [Raspberry Pi]({{ '/support/raspberry-pi/' | relative_url }}) or [ROCK 4C+]({{ '/support/rock-4c-plus/' | relative_url }}). Ask the demonstrator to help check the adapter if it still does not appear.
+- **Gateway Bluetooth controller missing:** Follow the checks for your [Raspberry Pi]({{ '/support/raspberry-pi/' | relative_url }}) or [ROCK 4C+]({{ '/support/rock-4c-plus/' | relative_url }}). Ask the TSS to help check the adapter if it still does not appear.
 
 ## Further exploration
 

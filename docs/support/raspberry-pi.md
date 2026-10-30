@@ -39,7 +39,7 @@ python3 --version
 bluetoothctl show
 ```
 
-If the `.local` name does not resolve, confirm the Pi and laptop are on the intended network and ask the demonstrator for the Pi's IP address. Use `ssh ee5127@<Pi-IP-address>` with your own username and the supplied address. Some managed networks restrict device-to-device connections.
+If the `.local` name does not resolve, confirm the Pi and laptop are on the intended network and ask the Teaching Support Staff (TSS) for the Pi's IP address. Use `ssh ee5127@<Pi-IP-address>` with your own username and the supplied address. Some managed networks restrict device-to-device connections.
 
 ## 3. Enable WayVNC from SSH
 
@@ -74,7 +74,7 @@ Return to [Lab 4]({{ '/labs/rpi-ble-data-collection/' | relative_url }}) to prep
 
 - **SSH cannot find the Pi:** Check the hostname, power and network connection. Try the Pi's IP address if `.local` discovery is unavailable.
 - **SSH works but VNC does not connect:** Confirm that VNC was enabled in `raspi-config` and that the Pi and laptop can reach each other on the network. Reboot the Pi and try again.
-- **Bluetooth controller missing:** Run `bluetoothctl show` at the Pi prompt and check the image or adapter with the demonstrator.
+- **Bluetooth controller missing:** Run `bluetoothctl show` at the Pi prompt and check the image or adapter with the TSS.
 
 ## References
 

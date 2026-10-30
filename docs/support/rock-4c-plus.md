@@ -39,7 +39,7 @@ sudo systemctl start bluetooth
 bluetoothctl show
 ```
 
-If the controller is listed but powered off, run `bluetoothctl power on` and check `bluetoothctl show` again. If `bluetoothctl` is missing, or no controller appears, check the ROCK 4C+ image, wireless antenna and Bluetooth software with the demonstrator. Radxa's [Bluetooth guidance](https://docs.radxa.com/en/rock4/rock4ab-se/getting-started/interface-usage/witibt) gives further service and firmware checks for the ROCK 4 series.
+If the controller is listed but powered off, run `bluetoothctl power on` and check `bluetoothctl show` again. If `bluetoothctl` is missing, or no controller appears, check the ROCK 4C+ image, wireless antenna and Bluetooth software with the Teaching Support Staff (TSS). Radxa's [Bluetooth guidance](https://docs.radxa.com/en/rock4/rock4ab-se/getting-started/interface-usage/witibt) gives further service and firmware checks for the ROCK 4 series.
 
 ## Set up a remote KDE desktop with VNC
 

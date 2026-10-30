@@ -34,7 +34,7 @@ Feather → BLE gateway → near.jsonl → Paho MQTT → IoT Hub → Cloud Shell
 2. In the [Azure portal](https://portal.azure.com/), search for **Subscriptions** and confirm that **Azure for Students** is active.
 3. Search for **Policy**. Under **Authoring**, open **Assignments** and select your Azure for Students subscription as the scope. Look for **Allowed resource deployment regions** or **Allowed locations**. Open the assignment and read **Parameters → Allowed locations**. These are the regions permitted by your subscription's policy; the list can differ between students.
 
-Use Microsoft's [Product Availability by Region](https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/) page to check which of your allowed regions list **IoT Hub**. Then check the region, **Free** tier and validation on the Hub creation screen for your subscription. If you cannot find an allowed region that offers IoT Hub, ask the demonstrator before creating another type of subscription or choosing a paid tier.
+Use Microsoft's [Product Availability by Region](https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/) page to check which of your allowed regions list **IoT Hub**. Then check the region, **Free** tier and validation on the Hub creation screen for your subscription. If you cannot find an allowed region that offers IoT Hub, follow the Azure free account entry under [Troubleshooting and finishing](#troubleshooting-and-finishing), and talk to the Teaching Support Staff (TSS) before choosing a paid tier.
 
 ### Create the Hub
 
@@ -51,7 +51,7 @@ Use Microsoft's [Product Availability by Region](https://azure.microsoft.com/en-
 | Tier | **Free**, if available |
 | Daily message limit | Check the limit displayed for the Free tier |
 
-Keep personal information out of the Hub name. If **Free** is unavailable, ask the demonstrator before selecting a tier that uses student credit.
+Keep personal information out of the Hub name. If **Free** is unavailable, ask the TSS before selecting a tier that uses student credit.
 
 3. On **Networking**, select **Public access** so the web simulator and gateway can reach the Hub over the Internet.
 4. On **Management**, select **Allow shared access policies** for the connection-string activities below.
@@ -369,12 +369,17 @@ The message body is the same JSON record in both runs, and both runs carry the s
 
 ## Troubleshooting and finishing
 
-- **Hub creation or device registration is unavailable:** Check that your Azure for Students subscription is active, the region is allowed by its policy, and the selected tier is available there. Check the **Review + create** validation message and ask the demonstrator for help if needed.
+- **Hub creation or device registration is unavailable:** Check that your Azure for Students subscription is active, the region is allowed by its policy, and the selected tier is available there. Check the **Review + create** validation message and ask the TSS for help if needed.
+- **None of your allowed regions offers IoT Hub:** Sign up for an [Azure free account](https://azure.microsoft.com/en-us/free/) with a different Microsoft account, and create the IoT Hub and the resources of the later labs in that subscription. The free account has no region restriction, so choose a nearby region that offers IoT Hub, and keep the Hub on the **Free** tier. The account's credit lasts 30 days; after that, continuing to use paid services requires upgrading to pay-as-you-go, which is charged. Read Microsoft's terms on the sign-up page before you start, and plan as follows:
+  - Plan the cloud work for your remaining project deliverables so that it is complete within the 30 days.
+  - Set a cost alert straight after sign-up. In the portal, search for **Cost Management**, open **Budgets** and select **+ Add**. Choose the free account's subscription as the scope, set a monthly amount, and add email alerts at 50%, 90% and 100% of the budget. A budget sends emails; it does not stop resources.
+  - Keep resources from using credit between sessions: stop the Stream Analytics job, let compute clusters scale to zero nodes, and delete any resource the lab tells you to remove.
+  - Before the 30 days end, download any data you want to keep. Then delete the resource group, unless you have decided to upgrade and accept the charges.
 - **Cloud Shell does not open:** Confirm that `Microsoft.CloudShell` shows **Registered** under the subscription's **Resource providers**, then reopen Cloud Shell.
 - **The monitor shows no messages:** Check the Hub name and device ID in the command. Leave it running and send new simulator messages. In the Hub's **Monitoring → Metrics**, check **Telemetry messages sent** to see whether messages reached the Hub.
 - **`near.jsonl` cannot be found:** Return to `~/Documents/ee5127-ble` and check the filename from Lab 4. The sender reads five lines from that folder.
 - **Python import fails:** Activate `.venv` in this terminal and run `python -m pip install azure-iot-device` again.
-- **The gateway cannot connect:** Check network access, the enabled device identity and its complete device connection string. Ask the demonstrator to check whether the network allows the IoT Hub connection.
+- **The gateway cannot connect:** Check network access, the enabled device identity and its complete device connection string. Ask the TSS to check whether the network allows the IoT Hub connection.
 - **Only some counters appear in the monitor:** Start monitoring before running the sender. Rerun the same five-record file if you missed the start of the short transmission.
 - **The Paho script reports that IoT Hub did not accept the connection:** Check that the complete device connection string is set in this terminal and that the network allows port 8883. A key copied incompletely produces a SAS token that IoT Hub rejects.
 - **`paho.mqtt` or `certifi` cannot be imported:** Activate `.venv` in this terminal. Both packages are installed with `azure-iot-device`; reinstall it with `python -m pip install azure-iot-device` if they are missing.

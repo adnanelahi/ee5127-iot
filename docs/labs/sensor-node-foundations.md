@@ -445,7 +445,7 @@ Repeat the scan three times. Compare the returned address sets with your predict
 If an expected address is missing or an additional address appears:
 
 1. Confirm that the program uses `board.I2C()`, which selects the board’s default bus.
-2. Reload the program and repeat the scan. If the difference persists, discuss it with the demonstrator before concluding that a sensor is faulty.
+2. Reload the program and repeat the scan. If the difference persists, discuss it with the Teaching Support Staff (TSS) before concluding that a sensor is faulty.
 
 #### Interpret the result
 
