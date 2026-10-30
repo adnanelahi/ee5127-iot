@@ -60,7 +60,7 @@ The screenshot shows the names used by one group; use your own group ID.
 
 ## 2. Create a compute cluster
 
-The designer runs each pipeline on compute in the cloud. A compute cluster starts virtual machines when a pipeline is submitted and shuts them down after a set idle time, so it uses subscription credit only while pipelines run.
+The designer runs each pipeline on compute in the cloud. A compute cluster starts virtual machines when a pipeline is submitted and shuts them down after a set idle time, so it uses subscription credit only while pipelines run. [Azure Machine Learning Compute]({{ '/support/azure-ml-compute/' | relative_url }}) describes the other kinds of compute and where each is used.
 
 1. In the studio, open **Compute** in the left menu (under **Manage**), select the **Compute clusters** tab and select **+ New**.
 2. On **Virtual Machine**, use the entries below and select **Next**:
