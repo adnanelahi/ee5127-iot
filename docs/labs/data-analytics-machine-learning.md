@@ -233,7 +233,7 @@ The compute cluster scales down to zero nodes 120 seconds after the pipeline fin
 - **No virtual machine size can be selected, or the cluster fails with a quota error:** Azure for Students limits the number of processor cores per region. Choose a smaller size, or ask the demonstrator.
 - **The data asset does not appear in the designer:** check that you chose the **Tabular** type from the v1 dataset types when creating it, and refresh the **Data** list in the designer.
 - **A column cannot be found in Select Columns in Dataset or Train Model:** open the data asset's **Explore** tab and copy the exact column name; names are case-sensitive.
-- **The pipeline cannot be submitted:** check that every component input is connected, every component has its required settings, and the compute cluster is selected in **Settings**.
+- **The pipeline cannot be submitted:** check that every component input is connected, every component has its required settings, and `cpu-cluster` is selected under **Runtime settings** in the **Configure & Submit** panel.
 - **The pipeline stays in the queue or the first component waits for a long time:** the cluster is starting a node. Check the cluster's state under **Compute**; a first start can take several minutes.
 - **A component fails:** select it, open **Outputs + logs** and read the error at the end of the log.
 
