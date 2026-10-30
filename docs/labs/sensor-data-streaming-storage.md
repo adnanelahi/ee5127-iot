@@ -63,14 +63,18 @@ A storage account holds Azure data services; a container inside it holds files, 
 | Performance          | **Standard**                                                                                                        |
 | Redundancy           | **Locally redundant storage (LRS)**                                                                                  |
 
-![Create a storage account, Basics tab: project details]({{ '/assets/images/sensor-data-streaming-storage/storage-account-basics-project.png' | relative_url }})
+![Create a storage account, Basics tab: project details]({{ '/assets/images/sensor-data-streaming-storage/storage-account-basics-project.png' | relative_url }}){: width="710"}
 
-![Create a storage account, Basics tab: instance details down to redundancy]({{ '/assets/images/sensor-data-streaming-storage/storage-account-basics-instance.png' | relative_url }})
+![Create a storage account, Basics tab: instance details down to redundancy]({{ '/assets/images/sensor-data-streaming-storage/storage-account-basics-instance.png' | relative_url }}){: width="710"}
 
-3. Leave the settings on the other tabs at their defaults. Select **Review + create**, check that validation succeeds, then select **Create**. When deployment finishes, select **Go to resource**.
+Selecting **General purpose** sets the redundancy to geo-redundant storage with read access. Change it to **Locally redundant storage (LRS)**, which keeps three copies of your data in one data centre and costs least. The portal then notes that RA-GRS is recommended for the workload; LRS is sufficient for this lab.
 
-4. In the storage account, open **Data storage → Containers** and select **+ Add Container**.
-5. Enter the name `sensor-data`, keep the anonymous access level at **Private (no anonymous access)**, and select **Create**.
+3. Leave the settings on the other pages, listed on the left of the form, at their defaults. Select **Review and create**, check the summary, then select **Create**. When deployment finishes, select **Go to resource**.
+
+4. In the storage account, open **Data storage → Containers** and select **Add container**.
+5. Enter the name `sensor-data` and select **Create**. The anonymous access level is fixed at **Private (no anonymous access)**, because new storage accounts disable anonymous access.
+
+   ![New container panel with the name sensor-data and the private access level]({{ '/assets/images/sensor-data-streaming-storage/storage-new-container.png' | relative_url }}){: width="421"}
 
 A private container accepts requests only from users and services that hold permission for the storage account. Your sensor records therefore stay inaccessible to anyone who finds the account name.
 
@@ -81,7 +85,7 @@ IoT Hub keeps incoming messages at its built-in endpoint for a period of time. E
 1. In your IoT Hub, open **Hub settings → Built-in endpoints**.
 2. Under **Consumer Groups**, enter `streamanalytics` in the **Create new consumer group** box. The portal saves the group automatically, and it then appears below `$Default`.
 
-![IoT Hub built-in endpoint with the streamanalytics consumer group]({{ '/assets/images/sensor-data-streaming-storage/iot-hub-consumer-groups.png' | relative_url }})
+![IoT Hub built-in endpoint with the streamanalytics consumer group]({{ '/assets/images/sensor-data-streaming-storage/iot-hub-consumer-groups.png' | relative_url }}){: width="797"}
 
 The **Retain for** setting shows how long the Hub keeps messages at the built-in endpoint; on the Free tier it is one day. A reader that starts later can still read messages sent within that period.
 
@@ -91,9 +95,9 @@ A Stream Analytics job reads messages from one or more inputs, applies a query w
 
 1. Select **+ Create a resource** and search the Marketplace for **Stream Analytics job**. On its Marketplace page, check that **Subscription** shows **Azure for Students** and **Plan** shows **Stream Analytics job**, then select **Create**.
 
-   ![Stream Analytics job Marketplace page with the subscription and plan]({{ '/assets/images/sensor-data-streaming-storage/stream-analytics-marketplace.png' | relative_url }})
+   ![Stream Analytics job Marketplace page with the subscription and plan]({{ '/assets/images/sensor-data-streaming-storage/stream-analytics-marketplace.png' | relative_url }}){: width="725"}
 
-2. Use the entries below:
+2. Use the entries below. The portal may preselect a different resource group in your subscription, so check **Resource group** before you continue.
 
 | Field | Entry |
 | --- | --- |
@@ -104,30 +108,34 @@ A Stream Analytics job reads messages from one or more inputs, applies a query w
 | Hosting environment | **Cloud** |
 | Streaming units | **1** |
 
-![New Stream Analytics job form, Basics tab]({{ '/assets/images/sensor-data-streaming-storage/stream-analytics-job-basics.png' | relative_url }})
+![New Stream Analytics job form, Basics tab]({{ '/assets/images/sensor-data-streaming-storage/stream-analytics-job-basics.png' | relative_url }}){: width="705"}
 
 A streaming unit is the amount of computing capacity allocated to the job. One unit is ample for one gateway's records, and the job is charged for its streaming units only while it runs.
 
 3. Leave the other tabs at their defaults. Select **Review + create**, then **Create**. When deployment finishes, select **Go to resource**.
 
-The job is created in the **Stopped** state. Keep it stopped while you configure its input, output and query.
+The new job's status is **Created**, and it does not run until you start it. Configure its input, output and query first.
 
 ## 5. Configure the IoT Hub input
 
 1. In the job, open **Job topology → Inputs**, select **+ Add input** and choose **IoT Hub**.
-2. Use the entries below and select **Save**:
+2. The portal fills the form with defaults, including the Hub's name as the alias, the `$Default` consumer group and the **iothubowner** policy. Change them to the entries below and select **Save**:
 
 | Field | Entry |
 | --- | --- |
 | Input alias | `IoTHubInput` |
-| IoT Hub | Select your Hub from your subscriptions |
+| IoT Hub | **Select IoT Hub from your subscriptions**, then your Hub |
 | Consumer group | `streamanalytics` |
 | Shared access policy name | **service** |
 | Endpoint | **Messaging** |
+| Partition key | Leave empty |
 | Event serialization format | **JSON** |
 | Encoding | **UTF-8** |
+| Event compression type | **None** |
 
-The portal fills in the shared access policy key for you. The **service** policy lets the job read messages from the Hub. The input alias is the name the query uses for this input.
+![IoT Hub input form with the alias, Hub, consumer group and service policy]({{ '/assets/images/sensor-data-streaming-storage/stream-analytics-iot-hub-input.png' | relative_url }}){: width="272"}
+
+After saving, the portal tests the connection and reports **Successful connection test**. The portal fills in the shared access policy key for you. The **service** policy lets the job read messages from the Hub. The input alias is the name the query uses for this input.
 
 ## 6. Configure the Blob output
 
@@ -148,9 +156,9 @@ The portal fills in the shared access policy key for you. The **service** policy
 | Date format | `YYYY/MM/DD` |
 | Time format | `HH` |
 
-![Blob storage output form: alias, storage account, container and authentication]({{ '/assets/images/sensor-data-streaming-storage/stream-analytics-blob-output-1.png' | relative_url }})
+![Blob storage output form: alias, storage account, container and authentication]({{ '/assets/images/sensor-data-streaming-storage/stream-analytics-blob-output-1.png' | relative_url }}){: width="397"}
 
-![Blob storage output form: write mode, path pattern and time formats]({{ '/assets/images/sensor-data-streaming-storage/stream-analytics-blob-output-2.png' | relative_url }})
+![Blob storage output form: write mode, path pattern and time formats]({{ '/assets/images/sensor-data-streaming-storage/stream-analytics-blob-output-2.png' | relative_url }}){: width="397"}
 
 Leave **Minimum rows** and **Maximum time** empty, so that the job uses its default batching. The portal fills in the storage account key for you, so the key stays inside Azure. The path pattern makes the job start a new blob each hour, in folders named after the date and hour, and **Line separated** writes one JSON record per line. **Append, as results arrive** adds each batch of records to the current blob as soon as the batch is ready, so stored records appear within minutes.
 
@@ -294,11 +302,11 @@ If you want to see the records arrive, start the Cloud Shell monitor from the pr
 
 3. Select **Save query**.
 4. Select `IoTHubInput` in the list of inputs. The **Input preview** tab shows a sample of recent messages from the Hub. If it is empty, run the replay program again and refresh the preview.
-5. Select **Test query** and inspect the **Test results** tab.
+5. Select **Test query** and inspect the **Test results** tab. Scroll the results to the right to see the time columns.
 
-   ![Stream Analytics query with test results showing the replayed records]({{ '/assets/images/sensor-data-streaming-storage/stream-analytics-query-test-results.png' | relative_url }})
+   ![Stream Analytics query with test results, where records from an earlier replay are followed by today's records]({{ '/assets/images/sensor-data-streaming-storage/stream-analytics-query-test-results.png' | relative_url }})
 
-`SELECT *` passes every field of each message to the output. Compare the columns in the test results with the fields of a record in `near.jsonl`. Widen the `receivedAt` and `sentAt` columns by dragging their header edges and compare the dates: `receivedAt` is the day you collected the records from the Feather, and `sentAt` is today. The extra columns, such as `EventEnqueuedUtcTime`, `EventProcessedUtcTime`, `PartitionId` and `IoTHub`, are added by IoT Hub and Stream Analytics. Open the `IoTHub` value of one row and find `ConnectionDeviceId`: it is the device identity that sent the message, which you registered in the previous lab.
+`SELECT *` passes every field of each message to the output. Compare the columns in the test results with the fields of a record in `near.jsonl`. Widen the `receivedAt` and `sentAt` columns by dragging their header edges and compare the dates: `receivedAt` is the day you collected the records from the Feather, and `sentAt` is the day you replayed them. The sample is drawn from the messages the Hub still holds, so it can include records from a replay on the previous day; scroll down to find the records with today's `sentAt`. The extra columns, such as `EventEnqueuedUtcTime`, `EventProcessedUtcTime`, `PartitionId` and `IoTHub`, are added by IoT Hub and Stream Analytics. Open the `IoTHub` value of one row and find `ConnectionDeviceId`: it is the device identity that sent the message, which you registered in the previous lab.
 
 The test runs on the sample only. It writes nothing to the container, and its `EventProcessedUtcTime` values record when you ran the test. Measure delays from the records the running job stores, in section 11.
 
@@ -306,9 +314,12 @@ The test runs on the sample only. It writes nothing to the container, and its `E
 
 1. On the job's **Overview** page, select **Start job**.
 2. For **Job output start time**, select **Now**, then select **Start**.
-3. Wait until the job status changes to **Running**. This can take a few minutes.
 
-   The job page may show a message that diagnostic settings have not been configured. Diagnostic settings send the job's logs to a further Azure service; this lab uses the **Activity log** and the job's metrics instead, so leave the message as it is.
+   ![Start job panel with the output start time set to Now]({{ '/assets/images/sensor-data-streaming-storage/stream-analytics-start-job.png' | relative_url }}){: width="555"}
+
+   The panel shows a message that diagnostic settings have not been configured. Diagnostic settings send the job's logs to a further Azure service; this lab uses the **Activity log** and the job's metrics instead, so leave the message as it is.
+
+3. Wait until the job status changes from **Starting** to **Running**. Select **Refresh** on the **Overview** page to update the status; this can take one or two minutes.
 
 4. In the gateway terminal, run the replay program again:
 
@@ -352,21 +363,6 @@ A few records show the size of each delay. To describe the delays of the whole r
 
 Compare the two delays. The gateway-to-Hub delay depends on the network path and on the agreement between the gateway clock and the Hub clock, so a value close to zero, or slightly negative, indicates a clock offset of that size. The IoT Hub-to-Stream Analytics delay depends on how often the job reads from the Hub. Then compare the blob's **Last modified** time with the latest `EventProcessedUtcTime` in the file. That difference is the time the record waited in the job's output batch before the blob was written.
 
-## 12. Send records while the job is stopped
-
-1. On the job's **Overview** page, select **Stop job** and wait until the status is **Stopped**.
-2. Run `python replay_sensor_data.py` on the gateway and note the `sentAt` time of the first record.
-3. Start the job with the output start time **Now**. Wait for **Running** and a few minutes more, then list the blobs again and look for records with that `sentAt` time.
-4. Stop the job again, then start it with the output start time **When last stopped**. Wait, then list the blobs and look for the same records.
-
-IoT Hub keeps the messages sent while the job was stopped. The output start time selects which of them the job processes: **Now** begins with messages arriving after the start, and **When last stopped** continues from the point where the job stopped. Records sent while the job was stopped show a larger IoT Hub-to-Stream Analytics delay when you analyse them, because that delay includes the time the job was stopped.
-
-When you finish, stop the job and clear the device connection string from the gateway terminal:
-
-```bash
-unset IOTHUB_DEVICE_CONNECTION_STRING
-```
-
 ## Observations and reflection
 
 - How many records did the replay send, and did every counter appear in the stored blob?
@@ -374,7 +370,6 @@ unset IOTHUB_DEVICE_CONNECTION_STRING
 - What were the median gateway-to-Hub and Hub-to-Stream Analytics delays? Which stage contributes most to the time between the gateway sending a record and that record being stored?
 - What does a negative or near-zero gateway-to-Hub delay tell you about the two clocks involved?
 - Why does this lab measure delay from `sentAt`, and what would `receivedAt` measure if the gateway forwarded records as soon as it collected them from the Feather?
-- Which output start time would you choose for a deployed system that must store every record, and why?
 
 Keep the storage account, the container with its stored records, the Stream Analytics job and `replay_sensor_data.py`. Later labs add a machine-learning function to this job and visualise the stored records.
 
@@ -388,7 +383,13 @@ Keep the storage account, the container with its stored records, the Stream Anal
 - **No blob appears:** confirm that the job status is **Running** and that you replayed the records after it started. Wait a few minutes for the output batch, and check the output's container name and path pattern.
 - **The gateway cannot connect:** check the device connection string in this terminal and the network, as in the previous lab.
 
-Stop the Stream Analytics job before you leave. A stopped job keeps its input, output and query and incurs no streaming charge. Keep the IoT Hub, storage account and job for the later labs.
+Stop the Stream Analytics job before you leave: on its **Overview** page, select **Stop job**, confirm with **Yes**, and wait until the status is **Stopped**. A stopped job keeps its input, output and query and incurs no streaming charge. Keep the IoT Hub, storage account and job for the later labs.
+
+Clear the device connection string from the gateway terminal:
+
+```bash
+unset IOTHUB_DEVICE_CONNECTION_STRING
+```
 
 ## References
 
