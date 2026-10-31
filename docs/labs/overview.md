@@ -16,5 +16,7 @@ These practical activities follow sensor data from the Feather through a BLE gat
 | [5 — Gateway Telemetry to Azure IoT Hub]({{ '/labs/gateway-iot-hub-telemetry/' | relative_url }}) | Create an IoT Hub, test it with a simulator and send gateway records. |
 | [Streaming and Storing Sensor Data in the IoT Cloud]({{ '/labs/sensor-data-streaming-storage/' | relative_url }}) | Process gateway records with Stream Analytics, store them in Blob Storage and measure the delay at each stage. |
 | [Data Analytics and Machine Learning in the IoT Cloud]({{ '/labs/data-analytics-machine-learning/' | relative_url }}) | Train and evaluate a classifier on sensor data with Azure Machine Learning designer. |
+| [Deploying a Machine Learning Model as a Web Service]({{ '/labs/ml-model-deployment/' | relative_url }}) | Deploy the trained classifier as a real-time endpoint on a Kubernetes cluster and test it with Postman. |
+| [Integrating a Machine Learning Model with the IoT Data Stream]({{ '/labs/ml-model-stream-integration/' | relative_url }}) | Call the deployed model from the Stream Analytics job and store its predictions in Blob Storage. |
 
 [Support material]({{ '/support/' | relative_url }}) provides setup and recovery guidance.

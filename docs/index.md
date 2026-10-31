@@ -28,4 +28,8 @@ These laboratories are unassessed practical activities. Use the investigations t
 
 - [Data Analytics and Machine Learning in the IoT Cloud]({{ '/labs/data-analytics-machine-learning/' | relative_url }})
 
+- [Deploying a Machine Learning Model as a Web Service]({{ '/labs/ml-model-deployment/' | relative_url }})
+
+- [Integrating a Machine Learning Model with the IoT Data Stream]({{ '/labs/ml-model-stream-integration/' | relative_url }})
+
 - [Support]({{ '/support/' | relative_url }})
