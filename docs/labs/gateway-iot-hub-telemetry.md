@@ -51,7 +51,7 @@ Use Microsoft's [Product Availability by Region](https://azure.microsoft.com/en-
 | Tier | **Free**, if available |
 | Daily message limit | Check the limit displayed for the Free tier |
 
-Keep personal information out of the Hub name. If **Free** is unavailable, ask the TSS before selecting a tier that uses student credit.
+Keep personal information out of the Hub name. The **Tier** list may default to **Standard**; select **Free**. If **Free** is unavailable, ask the TSS before selecting a tier that uses student credit.
 
 3. On **Networking**, select **Public access** so the web simulator and gateway can reach the Hub over the Internet.
 4. On **Management**, select **Allow shared access policies** for the connection-string activities below.
@@ -370,12 +370,13 @@ The message body is the same JSON record in both runs, and both runs carry the s
 ## Troubleshooting and finishing
 
 - **Hub creation or device registration is unavailable:** Check that your Azure for Students subscription is active, the region is allowed by its policy, and the selected tier is available there. Check the **Review + create** validation message and ask the TSS for help if needed.
-- **None of your allowed regions offers IoT Hub:** Sign up for an [Azure free account](https://azure.microsoft.com/en-us/free/) with a different Microsoft account, and create the IoT Hub and the resources of the later labs in that subscription. The free account has no region restriction, so choose a nearby region that offers IoT Hub, and keep the Hub on the **Free** tier. The account's credit lasts 30 days; after that, continuing to use paid services requires upgrading to pay-as-you-go, which is charged. Read Microsoft's terms on the sign-up page before you start, and plan as follows:
+- **None of your allowed regions offers IoT Hub:** Sign up for an [Azure free account](https://azure.microsoft.com/en-us/free/) with a different Microsoft account, and create the IoT Hub and the resources of the later labs in that subscription. The free account has no region restriction, so choose a nearby region that offers IoT Hub, and change **Tier** from the default **Standard** to **Free**, which shows a daily message limit of 8,000 at no charge. The account's credit lasts 30 days; after that, continuing to use paid services requires upgrading to pay-as-you-go, which is charged. Read Microsoft's terms on the sign-up page before you start, and plan as follows:
   - Email the module instructor to say that you will use an Azure free account in place of Azure for Students.
   - Plan the cloud work for your remaining project deliverables so that it is complete within the 30 days.
-  - Set a cost alert straight after sign-up. In the portal, search for **Cost Management**, open **Budgets** and select **+ Add**. Choose the free account's subscription as the scope, set a monthly amount, and add email alerts at 50%, 90% and 100% of the budget. A budget sends emails; it does not stop resources.
+  - Set a cost alert straight after sign-up: create a monthly budget for the free account's subscription with email alerts at 50%, 90% and 100%, as described in [Azure Budget Alerts]({{ '/support/azure-budget-alert/' | relative_url }}). A budget only sends emails; resources keep running and using credit when an alert arrives.
   - Keep resources from using credit between sessions: stop the Stream Analytics job, let compute clusters scale to zero nodes, and delete any resource the lab tells you to remove.
   - Before the 30 days end, download any data you want to keep. Then delete the resource group, unless you have decided to upgrade and accept the charges.
+- **The portal shows "You don't have access" for your own resources:** the portal may have opened in a different directory from the one that holds your subscription, which the error details show as "The access token is from the wrong issuer". Select the settings icon (⚙) at the top of the portal, open **Directories + subscriptions**, and select **Switch** beside **Default Directory**, or beside the directory that holds your subscription.
 - **Cloud Shell does not open:** Confirm that `Microsoft.CloudShell` shows **Registered** under the subscription's **Resource providers**, then reopen Cloud Shell.
 - **The monitor shows no messages:** Check the Hub name and device ID in the command. Leave it running and send new simulator messages. In the Hub's **Monitoring → Metrics**, check **Telemetry messages sent** to see whether messages reached the Hub.
 - **`near.jsonl` cannot be found:** Return to `~/Documents/ee5127-ble` and check the filename from Lab 4. The sender reads five lines from that folder.

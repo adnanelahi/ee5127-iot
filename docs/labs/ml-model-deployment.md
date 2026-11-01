@@ -69,7 +69,7 @@ The job takes about 10 minutes, most of it while the cluster starts a node. Open
 
    ![Kubernetes clusters tab with the + New menu showing AksCompute]({{ '/assets/images/ml-model-deployment/kubernetes-clusters-new-akscompute.png' | relative_url }})
 
-3. On **Virtual Machine**, keep **Create new**, select the region of your workspace under **Location**, search for **Standard_D2s_v3** and select it. Select **Next**.
+3. On **Virtual Machine**, keep **Create new**, select the region of your workspace under **Location**, search for **Standard_D2s_v3** and select it. If the list does not include Standard_D2s_v3, search for **Standard_D2as_v7** instead, which also has two cores and 8 GB of memory. Select **Next**.
 
    ![Create AksCompute, Virtual Machine page with Standard_D2s_v3 selected]({{ '/assets/images/ml-model-deployment/aks-virtual-machine.png' | relative_url }})
 
@@ -85,7 +85,7 @@ The job takes about 10 minutes, most of it while the cluster starts a node. Open
 
 ![Create AksCompute, Advanced Settings page with Dev-test and one node]({{ '/assets/images/ml-model-deployment/aks-advanced-settings.png' | relative_url }})
 
-The form opens with **Production** and three nodes, which would use more processor cores than an Azure for Students subscription allows. **Dev-test** permits a single node. Move the **Number of nodes** slider to the left end, or select it and press the left arrow key, until it shows 1. Standard_D2s_v3 has two cores and 8 GB of memory, which is ample for one small model.
+The form opens with **Production** and three nodes, which would use more processor cores than an Azure for Students subscription allows. **Dev-test** permits a single node. Move the **Number of nodes** slider to the left end, or select it and press the left arrow key, until it shows 1. Either size has two cores and 8 GB of memory, which is ample for one small model.
 
 Creating the cluster takes 10 to 15 minutes. Select **Refresh** until its state is **Succeeded**.
 
@@ -106,7 +106,7 @@ Creating the cluster takes 10 to 15 minutes. Select **Refresh** until its state 
 
 The **Compute type** list also offers **Azure Container Instance**. Use **AksCompute**: deployments to Azure Container Instance did not complete in Azure for Students subscriptions when this lab was prepared.
 
-The first deployment builds a container image for the model, which takes up to 15 minutes; later deployments reuse it. Follow progress in the notifications (the bell icon). The message **Deployment "occupancy-g001" creation completed** marks the end; a failure is also reported there.
+The first deployment creates a container registry for the workspace and builds a container image for the model, which can take 20 to 25 minutes; later deployments reuse them. Follow progress in the notifications (the bell icon). A notification ending in "Timed out waiting for your deployment to complete" can appear while the image is still being built. The message **Deployment "occupancy-g001" creation completed** marks the end; a failure is also reported there.
 
 ## 6. Inspect the endpoint
 
@@ -166,8 +166,8 @@ The endpoint's request format is published as an OpenAPI (Swagger) description a
 
 - **Create inference pipeline is missing:** open the completed training job, not the pipeline draft, and look under **…** in the job's toolbar.
 - **Deploy is missing:** submit the edited inference pipeline and wait until its job is **Completed**.
-- **The cluster cannot be created:** check that **Cluster purpose** is **Dev-test** with one node, and that the **Available quota** column shows enough cores for the chosen size. Ask the Teaching Support Staff (TSS) if no size fits your quota.
-- **The endpoint stays Transitioning:** open the notifications; a failed deployment is reported there even when the endpoint page has not updated.
+- **The cluster cannot be created:** check that **Cluster purpose** is **Dev-test** with one node, and that the **Available quota** column shows enough cores for the chosen size. If neither Standard_D2s_v3 nor Standard_D2as_v7 is listed, choose another size with two cores and check its **Available quota**. Ask the Teaching Support Staff (TSS) if no size fits your quota.
+- **The endpoint stays Transitioning:** open the notifications. A running **prepare_image** job means the image is still being built; wait for **Deployment … creation completed**. A failed deployment is reported there even when the endpoint page has not updated.
 - **Postman returns 401 Unauthorized:** copy the key again with the copy icon beside **Primary key**, and check that **Authorization** is set to **Bearer Token**.
 - **Postman returns 400 Bad Request:** check that every record contains all seven fields with the spelling shown in the Swagger description.
 
