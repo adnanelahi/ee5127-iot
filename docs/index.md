@@ -32,4 +32,6 @@ These laboratories are unassessed practical activities. Use the investigations t
 
 - [Integrating a Machine Learning Model with the IoT Data Stream]({{ '/labs/ml-model-stream-integration/' | relative_url }})
 
+- [Sensor Data Visualisation and Analytics on a Dashboard]({{ '/labs/sensor-data-visualisation-analytics/' | relative_url }})
+
 - [Support]({{ '/support/' | relative_url }})

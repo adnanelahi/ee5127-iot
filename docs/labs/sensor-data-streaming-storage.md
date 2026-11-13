@@ -82,10 +82,10 @@ A private container accepts requests only from users and services that hold perm
 
 IoT Hub keeps incoming messages at its built-in endpoint for a period of time. Each program that reads them does so through a named consumer group, and each consumer group receives every message. The Cloud Shell monitor uses the `$Default` group. Give the Stream Analytics job its own group so that the job and the monitor can read the same messages at the same time.
 
-1. In your IoT Hub, open **Hub settings → Built-in endpoints**.
+1. In your IoT Hub, open **Hub settings → Message routing** and select the **Endpoints** tab. Under **Built-in endpoints**, expand **Event Hub Details**. In some versions of the portal the same panel opens directly from **Hub settings → Built-in endpoints**.
 2. Under **Consumer Groups**, enter `streamanalytics` in the **Create new consumer group** box. The portal saves the group automatically, and it then appears below `$Default`.
 
-![IoT Hub built-in endpoint with the streamanalytics consumer group]({{ '/assets/images/sensor-data-streaming-storage/iot-hub-consumer-groups.png' | relative_url }}){: width="797"}
+![Event Hub Details of the IoT Hub built-in endpoint with the streamanalytics consumer group below $Default]({{ '/assets/images/sensor-data-streaming-storage/iot-hub-message-routing-consumer-groups.png' | relative_url }}){: width="635"}
 
 The **Retain for** setting shows how long the Hub keeps messages at the built-in endpoint; on the Free tier it is one day. A reader that starts later can still read messages sent within that period.
 
@@ -377,7 +377,7 @@ Keep the storage account, the container with its stored records, the Stream Anal
 
 - **`timedatectl` reports that the clock is unsynchronised:** check the gateway's network connection and wait a minute. Ask the Teaching Support Staff (TSS) if the university network blocks NTP.
 - **The storage account name is rejected:** use only lowercase letters and digits, 3 to 24 characters, and change the final digits until the name is unique.
-- **The consumer group cannot be saved:** check that you are on the **Built-in endpoints** page of your Hub and that the name contains only letters, digits, hyphens, periods and underscores.
+- **The consumer group cannot be saved:** check that you are in the **Event Hub Details** panel of your Hub's built-in endpoint, under **Hub settings → Message routing → Endpoints**, and that the name contains only letters, digits, hyphens, periods and underscores.
 - **The input preview is empty:** run the replay program and refresh the preview. Check that the input uses your Hub, the `streamanalytics` consumer group and the **service** policy.
 - **The job does not start:** open **Activity log** on the job, and check the input and output with **Test** on their pages.
 - **No blob appears:** confirm that the job status is **Running** and that you replayed the records after it started. Wait a few minutes for the output batch, and check the output's container name and path pattern.
